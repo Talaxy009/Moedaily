@@ -1,6 +1,8 @@
 import React from 'react';
 import {useRecoilState} from 'recoil';
+import LocalizedStrings from 'react-native-localization';
 import {Portal, Snackbar, useTheme} from 'react-native-paper';
+
 import {View, StyleSheet} from 'react-native';
 import {toastState} from '../common/atoms';
 
@@ -24,7 +26,7 @@ export default function Layout({children}: {children: React.ReactNode}) {
 				visible={toast.open}
 				onDismiss={handleClose}
 				action={{
-					label: '关闭',
+					label: strings.label,
 					onPress: handleClose,
 				}}
 			>
@@ -37,5 +39,14 @@ export default function Layout({children}: {children: React.ReactNode}) {
 const styles = StyleSheet.create({
 	root: {
 		flex: 1,
+	},
+});
+
+const strings = new LocalizedStrings({
+	en: {
+		label: 'Close',
+	},
+	zh: {
+		label: '关闭',
 	},
 });

@@ -2,6 +2,8 @@ import React from 'react';
 import {Linking} from 'react-native';
 import {Portal, Dialog, Button, Text} from 'react-native-paper';
 
+import strings from './strings';
+
 interface DialogProps {
 	onClose: () => void;
 	visible: boolean;
@@ -21,13 +23,15 @@ export default function OpenLinkDialog({
 	return (
 		<Portal>
 			<Dialog visible={visible} onDismiss={onClose}>
-				<Dialog.Title>打开链接</Dialog.Title>
+				<Dialog.Title>{strings.visitLink}</Dialog.Title>
 				<Dialog.Content>
-					<Text>要打开链接：{url} 吗？</Text>
+					<Text>
+						{strings.visitLink}: {url} ?
+					</Text>
 				</Dialog.Content>
 				<Dialog.Actions>
-					<Button onPress={onClose}>取消</Button>
-					<Button onPress={handleConfirm}>确认</Button>
+					<Button onPress={onClose}>{strings.cancel}</Button>
+					<Button onPress={handleConfirm}>{strings.confirm}</Button>
 				</Dialog.Actions>
 			</Dialog>
 		</Portal>

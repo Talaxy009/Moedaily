@@ -14,6 +14,7 @@ import {
 	DefaultTheme,
 	DarkTheme,
 } from '@react-navigation/native';
+import LocalizedStrings from 'react-native-localization';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 
 import IndexPage from './src/pages/index';
@@ -55,12 +56,12 @@ export default function App(): JSX.Element {
 		<RecoilRoot>
 			<NavigationContainer theme={navTheme}>
 				<PaperProvider theme={theme}>
-					<Tab.Navigator initialRouteName="Index">
+					<Tab.Navigator initialRouteName="Home">
 						<Tab.Screen
-							name="Index"
+							name="Home"
 							component={IndexPage}
 							options={{
-								tabBarLabel: '首页',
+								tabBarLabel: strings.home,
 								tabBarIcon: HomeIcon,
 							}}
 						/>
@@ -68,7 +69,7 @@ export default function App(): JSX.Element {
 							name="Settings"
 							component={SettingsPage}
 							options={{
-								tabBarLabel: '设置',
+								tabBarLabel: strings.settings,
 								tabBarIcon: SettingsIcon,
 							}}
 						/>
@@ -78,3 +79,14 @@ export default function App(): JSX.Element {
 		</RecoilRoot>
 	);
 }
+
+const strings = new LocalizedStrings({
+	en: {
+		home: 'Home',
+		settings: 'Setting',
+	},
+	zh: {
+		home: '首页',
+		settings: '设置',
+	},
+});

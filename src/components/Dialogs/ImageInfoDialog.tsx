@@ -1,7 +1,9 @@
 import React from 'react';
 import {Linking} from 'react-native';
 import {Button, Dialog, Portal, List} from 'react-native-paper';
+
 import {ClockIcon, AccIcon, TagIcon} from '../ListIcons';
+import strings from './strings';
 
 import type {ImageData} from '../../common/types';
 
@@ -25,12 +27,12 @@ export default function ImageInfoDialog({
 				<Dialog.Title>{data?.title || ''}</Dialog.Title>
 				<Dialog.Content>
 					<List.Item
-						title="作者"
+						title={strings.author}
 						description={data?.author}
 						left={AccIcon}
 					/>
 					<List.Item
-						title="时间"
+						title={strings.time}
 						left={ClockIcon}
 						description={
 							data?.uploadDate &&
@@ -38,14 +40,14 @@ export default function ImageInfoDialog({
 						}
 					/>
 					<List.Item
-						title="标签"
+						title={strings.tags}
 						left={TagIcon}
 						description={data?.tags.toString()}
 					/>
 				</Dialog.Content>
 				<Dialog.Actions>
-					<Button onPress={handlePixiv}>在 Pixiv 中打开</Button>
-					<Button onPress={onClose}>关闭</Button>
+					<Button onPress={handlePixiv}>{strings.openPixiv}</Button>
+					<Button onPress={onClose}>{strings.close}</Button>
 				</Dialog.Actions>
 			</Dialog>
 		</Portal>

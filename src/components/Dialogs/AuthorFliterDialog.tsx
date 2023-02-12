@@ -8,6 +8,8 @@ import {
 	TextInput,
 } from 'react-native-paper';
 import {View, StyleSheet, Vibration} from 'react-native';
+import strings from './strings';
+
 import {getUIDs, storageUIDs} from '../../common/storage';
 
 interface DialogProps {
@@ -74,7 +76,7 @@ export default function AuthorFliterDialog({
 	return (
 		<Portal>
 			<Dialog visible={visible} onDismiss={onClose}>
-				<Dialog.Title>画师筛选</Dialog.Title>
+				<Dialog.Title>{strings.authorFliter}</Dialog.Title>
 				<Dialog.Content>
 					<View style={styles.tagsBox}>
 						{uids &&
@@ -93,13 +95,13 @@ export default function AuthorFliterDialog({
 					</View>
 					{delUID ? (
 						<Text style={styles.delText} variant="bodyLarge">
-							要删除：{delUID}?
+							{strings.delete}: {delUID}?
 						</Text>
 					) : (
 						<TextInput
 							dense
 							value={newUID}
-							label="添加画师 UID"
+							label={strings.addAuthor}
 							keyboardType="numeric"
 							onChangeText={(text) => setNewUID(text)}
 							right={
@@ -113,10 +115,12 @@ export default function AuthorFliterDialog({
 				</Dialog.Content>
 				<Dialog.Actions>
 					{delUID && (
-						<Button onPress={() => setDelUID('')}>取消</Button>
+						<Button onPress={() => setDelUID('')}>
+							{strings.cancel}
+						</Button>
 					)}
 					<Button onPress={delUID ? handleDelUID : onClose}>
-						确认
+						{strings.confirm}
 					</Button>
 				</Dialog.Actions>
 			</Dialog>

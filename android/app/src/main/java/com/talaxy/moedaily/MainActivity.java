@@ -8,6 +8,7 @@ import com.facebook.react.defaults.DefaultReactActivityDelegate;
 
 public class MainActivity extends ReactActivity {
 
+  //react-native-screens override
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(null);

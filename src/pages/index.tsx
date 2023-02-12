@@ -1,6 +1,7 @@
 import React from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 import {FAB, IconButton} from 'react-native-paper';
+import LocalizedStrings from 'react-native-localization';
 
 import {ImageInfoDialog} from '../components/Dialogs';
 import AutoImage from '../components/AutoImage';
@@ -20,7 +21,7 @@ export default function IndexPage() {
 	const toast = useToast();
 
 	const handleError = () => {
-		toast('无法加载图片');
+		toast(strings.imgLoadFailed);
 		setLoading(false);
 	};
 
@@ -44,7 +45,7 @@ export default function IndexPage() {
 				})
 				.catch((e) => {
 					console.log(e);
-					toast('请求出错');
+					toast(strings.requestFailed);
 				});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -99,5 +100,16 @@ const styles = StyleSheet.create({
 		top: 16,
 		right: 16,
 		position: 'absolute',
+	},
+});
+
+const strings = new LocalizedStrings({
+	en: {
+		imgLoadFailed: 'Image failed to load',
+		requestFailed: 'Request Failed',
+	},
+	zh: {
+		imgLoadFailed: '无法加载图片',
+		requestFailed: '请求出错',
 	},
 });

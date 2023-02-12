@@ -9,6 +9,7 @@ import {
 } from 'react-native-paper';
 import {View, StyleSheet, Vibration} from 'react-native';
 import {getTags, storageTags} from '../../common/storage';
+import strings from './strings';
 
 interface DialogProps {
 	onClose: () => void;
@@ -17,7 +18,7 @@ interface DialogProps {
 	selected: Set<string>;
 }
 
-export default function TagsManageDialog({
+export default function TagsFliterDialog({
 	onClose,
 	onSelect,
 	selected,
@@ -74,7 +75,7 @@ export default function TagsManageDialog({
 	return (
 		<Portal>
 			<Dialog visible={visible} onDismiss={onClose}>
-				<Dialog.Title>标签筛选</Dialog.Title>
+				<Dialog.Title>{strings.tagsFliter}</Dialog.Title>
 				<Dialog.Content>
 					<View style={styles.tagsBox}>
 						{tags &&
@@ -93,12 +94,12 @@ export default function TagsManageDialog({
 					</View>
 					{delTag ? (
 						<Text style={styles.delText} variant="bodyLarge">
-							要删除：{delTag}?
+							{strings.delete}: {delTag} ?
 						</Text>
 					) : (
 						<TextInput
 							dense
-							label="新建标签"
+							label={strings.addTags}
 							value={newTag}
 							onChangeText={(text) => setNewTag(text)}
 							right={
@@ -112,10 +113,12 @@ export default function TagsManageDialog({
 				</Dialog.Content>
 				<Dialog.Actions>
 					{delTag && (
-						<Button onPress={() => setDelTag('')}>取消</Button>
+						<Button onPress={() => setDelTag('')}>
+							{strings.cancel}
+						</Button>
 					)}
 					<Button onPress={delTag ? handleDelTag : onClose}>
-						确认
+						{strings.confirm}
 					</Button>
 				</Dialog.Actions>
 			</Dialog>

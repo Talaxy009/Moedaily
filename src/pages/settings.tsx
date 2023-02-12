@@ -1,12 +1,14 @@
 import React from 'react';
 import {ScrollView} from 'react-native';
 import {List, Switch} from 'react-native-paper';
+import LocalizedStrings from 'react-native-localization';
+
 // import ColorPoint from '../components/ColorPoint';
 import * as Icon from '../components/ListIcons';
 import Layout from '../components/Layout';
 import {
 	OpenLinkDialog,
-	TagsManageDialog,
+	TagsFliterDialog,
 	ProxyServerDialog,
 	AuthorFliterDialog,
 	ImageQualityDialog,
@@ -25,7 +27,6 @@ const defaultSettings = {
 } as AppSettings;
 
 export default function SettingsPage() {
-	const [expanded, setExpanded] = React.useState(false);
 	const [dialog, setDialog] = React.useState(0);
 	const [settings, setSettings] = React.useState<AppSettings>();
 
@@ -86,8 +87,12 @@ export default function SettingsPage() {
 		});
 
 	const handleReset = () => {
-		setSettings(defaultSettings);
-		storageAppSetting(defaultSettings);
+		const newSetting = {
+			...defaultSettings,
+			quality: settings?.quality,
+		} as AppSettings;
+		setSettings(newSetting);
+		storageAppSetting(newSetting);
 	};
 
 	const handleCloseDialog = () => setDialog(0);
@@ -110,19 +115,19 @@ export default function SettingsPage() {
 		<Layout>
 			<ScrollView>
 				<List.Section>
-					<List.Subheader>画像设置</List.Subheader>
+					<List.Subheader>{strings.filter.title}</List.Subheader>
 					<List.Item
-						title="标签筛选"
+						title={strings.filter.tag}
 						left={Icon.TagIcon}
 						onPress={() => setDialog(1)}
 					/>
 					<List.Item
-						title="画师筛选"
+						title={strings.filter.author}
 						left={Icon.AccFilterIcon}
 						onPress={() => setDialog(2)}
 					/>
 					<List.Item
-						title="排除 AI 作品"
+						title={strings.filter.ai}
 						left={Icon.BrushOffIcon}
 						right={(p) => (
 							<Switch
@@ -133,26 +138,23 @@ export default function SettingsPage() {
 						)}
 					/>
 					<List.Item
-						title="图像质量"
+						title={strings.filter.reset}
+						onPress={handleReset}
+						left={Icon.ReloadIcon}
+					/>
+				</List.Section>
+				<List.Section>
+					<List.Subheader>{strings.image.title}</List.Subheader>
+					<List.Item
+						title={strings.image.quality}
 						left={Icon.ImgSizeIcon}
 						onPress={() => setDialog(3)}
 					/>
-					<List.Accordion
-						title="进阶配置"
-						expanded={expanded}
-						onPress={() => setExpanded((p) => !p)}
-						left={Icon.WrenchIcon}>
-						<List.Item
-							title="反代服务地址"
-							left={Icon.LinkIcon}
-							onPress={() => setDialog(4)}
-						/>
-						<List.Item
-							title="重置画像设置"
-							onPress={handleReset}
-							left={Icon.ReloadIcon}
-						/>
-					</List.Accordion>
+					<List.Item
+						title={strings.image.proxy}
+						left={Icon.LinkIcon}
+						onPress={() => setDialog(4)}
+					/>
 				</List.Section>
 				{/* <List.Section>
 					<List.Subheader>APP 设置</List.Subheader>
@@ -163,27 +165,28 @@ export default function SettingsPage() {
 					/>
 				</List.Section> */}
 				<List.Section>
-					<List.Subheader>关于</List.Subheader>
+					<List.Subheader>{strings.about.title}</List.Subheader>
 					<List.Item
-						title="当前版本"
-						description="0.1.0-beta"
 						left={Icon.InfoIcon}
+						description="1.0.0"
+						onPress={() => setDialog(5)}
+						title={strings.about.version}
 					/>
 					<List.Item
-						title="APP 作者"
 						left={Icon.AccIcon}
 						description="Talaxy"
-						onPress={() => setDialog(5)}
+						onPress={() => setDialog(6)}
+						title={strings.about.author}
 					/>
 					<List.Item
-						title="API 提供"
 						left={Icon.ServerIcon}
 						description="Lolicon API"
-						onPress={() => setDialog(6)}
+						title={strings.about.api}
+						onPress={() => setDialog(7)}
 					/>
 				</List.Section>
 			</ScrollView>
-			<TagsManageDialog
+			<TagsFliterDialog
 				visible={dialog === 1}
 				onClose={handleCloseDialog}
 				onSelect={handleSelectTag}
@@ -210,13 +213,61 @@ export default function SettingsPage() {
 			<OpenLinkDialog
 				visible={dialog === 5}
 				onClose={handleCloseDialog}
-				url="https://www.talaxy.site/"
+				url="https://github.com/Talaxy009/Moedaily"
 			/>
 			<OpenLinkDialog
 				visible={dialog === 6}
+				onClose={handleCloseDialog}
+				url="https://www.talaxy.site/"
+			/>
+			<OpenLinkDialog
+				visible={dialog === 7}
 				onClose={handleCloseDialog}
 				url="https://api.lolicon.app/#/setu"
 			/>
 		</Layout>
 	);
 }
+
+const strings = new LocalizedStrings({
+	en: {
+		filter: {
+			title: 'Filter Settings',
+			tag: 'Tags Filter',
+			author: 'Authors Fliter',
+			ai: 'Exclude AI works',
+			reset: 'Reset Fliter',
+		},
+		image: {
+			title: 'Image Setting',
+			quality: 'Image Quality',
+			proxy: 'Image Proxy Server',
+		},
+		about: {
+			title: 'About',
+			version: 'APP Version',
+			author: 'APP Author',
+			api: 'API Provider',
+		},
+	},
+	zh: {
+		filter: {
+			title: '筛选设置',
+			tag: '标签筛选',
+			author: '画师筛选',
+			ai: '排除 AI 作品',
+			reset: '重置筛选配置',
+		},
+		image: {
+			title: '图像配置',
+			quality: '图像质量',
+			proxy: '反代服务地址',
+		},
+		about: {
+			title: '关于',
+			version: '当前版本',
+			author: 'APP 作者',
+			api: 'API 提供',
+		},
+	},
+});

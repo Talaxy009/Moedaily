@@ -1,5 +1,6 @@
 import React from 'react';
 import {Portal, Dialog, Button, TextInput} from 'react-native-paper';
+import strings from './strings';
 
 interface DialogProps {
 	onClose: () => void;
@@ -24,7 +25,7 @@ export default function ProxyServerDialog({
 	return (
 		<Portal>
 			<Dialog visible={visible} onDismiss={onClose}>
-				<Dialog.Title>反代配置</Dialog.Title>
+				<Dialog.Title>{strings.proxySetting}</Dialog.Title>
 				<Dialog.Content>
 					<TextInput
 						value={proxy}
@@ -34,8 +35,8 @@ export default function ProxyServerDialog({
 					/>
 				</Dialog.Content>
 				<Dialog.Actions>
-					<Button onPress={onClose}>取消</Button>
-					<Button onPress={handleConfirm}>确认</Button>
+					<Button onPress={onClose}>{strings.cancel}</Button>
+					<Button onPress={handleConfirm}>{strings.confirm}</Button>
 				</Dialog.Actions>
 			</Dialog>
 		</Portal>

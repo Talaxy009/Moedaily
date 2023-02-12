@@ -9,6 +9,8 @@ import {
 	RadioButton,
 } from 'react-native-paper';
 
+import strings from './strings';
+
 interface DialogProps {
 	onClose: () => void;
 	onSelect: (quality: number) => void;
@@ -31,7 +33,7 @@ export default function ImageInfoDialog({
 	return (
 		<Portal>
 			<Dialog visible={visible} onDismiss={onClose}>
-				<Dialog.Title>标签筛选</Dialog.Title>
+				<Dialog.Title>{strings.imgQuality}</Dialog.Title>
 				<Dialog.Content>
 					<RadioButton.Group
 						value={quality.toString()}
@@ -54,7 +56,7 @@ export default function ImageInfoDialog({
 					</RadioButton.Group>
 				</Dialog.Content>
 				<Dialog.Actions>
-					<Button onPress={onClose}>确定</Button>
+					<Button onPress={onClose}>{strings.confirm}</Button>
 				</Dialog.Actions>
 			</Dialog>
 		</Portal>
