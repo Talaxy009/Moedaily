@@ -4759,6 +4759,11 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.2.4.tgz#eca284f75d2965079309dc0ad9255abb2ebc1632"
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
 
+localized-strings@^0.2.0:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/localized-strings/-/localized-strings-0.2.4.tgz#9d61c06b60cc7b5edf7c46e6c7f2d1ecb84aeb2c"
+  integrity sha512-TKDhqFPkIIN/if2FSvVVZTaM/GP9TzfgdQ2uY65mr32xgFu5nqkKXprXbzy5rfx32DF5LDvS/y1UqYF/mAscYA==
+
 locate-path@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-3.0.0.tgz#dbec3b3ab759758071b58fe59fc41871af21400e"
@@ -5813,6 +5818,13 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-localization@^1.0.17:
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/react-localization/-/react-localization-1.0.19.tgz#b65a7fa58096cff6aa38bc3a0c4817ec97469ef0"
+  integrity sha512-f4E6T8xRis19K8qMOnnhjGV2quy1YH2lrSsnAiytvgt7uOSp6WgDhrZH6XZEaEFqupTOCFSf8uagIoIAkjl4JA==
+  dependencies:
+    localized-strings "^0.2.0"
+
 react-native-codegen@^0.71.3:
   version "0.71.3"
   resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.71.3.tgz#75fbc591819050791319ebdb9fe341ee4df5c288"
@@ -5827,6 +5839,13 @@ react-native-gradle-plugin@^0.71.14:
   version "0.71.14"
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.14.tgz#cc399662f04fbfcc0e352d03eae1d3efbd5f635a"
   integrity sha512-nnLawTZEPPRAKq92UqDkzoGgCBl9aa9zAihFHMwmwzn4WRVdK4O6Cd4XYiyoNOiQzx3Hh9k5WOckHE80C92ivQ==
+
+react-native-localization@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-localization/-/react-native-localization-2.3.1.tgz#b6752f16d2035bd4671fa5660c82941164e68b94"
+  integrity sha512-jmD6GEAGmstCIZOsxZcxWJbbx364c9qtKy8kefLcHYfAc73+g+e8CB7TZEwpK4IZNXxCBAeQMBsXfFrTyJmpWQ==
+  dependencies:
+    react-localization "^1.0.17"
 
 react-native-paper@^5.2.0:
   version "5.2.0"
