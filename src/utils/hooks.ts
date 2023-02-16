@@ -30,7 +30,7 @@ export function useImageIndex(imageIndex: number) {
 		}
 	};
 
-	return [currentImageIndex, onScroll] as const;
+	return [currentImageIndex, onScroll, setImageIndex] as const;
 }
 
 export default useImageIndex;

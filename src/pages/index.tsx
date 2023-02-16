@@ -17,7 +17,7 @@ export default function IndexPage() {
 	const [img, setImg] = React.useState<ImageDataList>([]);
 	const [loading, setLoading] = React.useState(true);
 	const [dialog, setDialog] = React.useState(false);
-	const [imageIndex, onScroll] = useImageIndex(0);
+	const [imageIndex, onScroll, setImageIndex] = useImageIndex(0);
 	const toast = useToast();
 
 	const handleError = () => {
@@ -26,14 +26,13 @@ export default function IndexPage() {
 	};
 
 	const handleRefresh = () => {
-		if (loading) {
-			setLoading(false);
-		} else {
-			setLoading(true);
+		if (!loading && imageIndex > 0) {
+			setImageIndex(0);
 			imageList.current?.scrollToIndex({
 				index: 0,
 			});
 		}
+		setLoading((pre) => !pre);
 	};
 
 	React.useEffect(() => {
@@ -42,6 +41,9 @@ export default function IndexPage() {
 				.then(({data}) => {
 					setImg(data);
 					setLoading(false);
+					if (data.length === 0) {
+						toast(strings.noData);
+					}
 				})
 				.catch((e) => {
 					console.log(e);
@@ -105,11 +107,13 @@ const styles = StyleSheet.create({
 
 const strings = new LocalizedStrings({
 	en: {
-		imgLoadFailed: 'Image failed to load',
+		imgLoadFailed: 'Failed to load this image',
 		requestFailed: 'Request Failed',
+		noData: 'No Artwork, please adjust filter',
 	},
 	zh: {
-		imgLoadFailed: '无法加载图片',
+		imgLoadFailed: '无法加载此图片',
 		requestFailed: '请求出错',
+		noData: '没有作品，请调整您的筛选条件',
 	},
 });
