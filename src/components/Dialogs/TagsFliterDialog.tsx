@@ -105,7 +105,7 @@ export default function TagsFliterDialog({
 							))
 						) : (
 							<Caption style={styles.caption}>
-								{strings.noUID}
+								{strings.noTag}
 							</Caption>
 						)}
 					</ScrollView>
