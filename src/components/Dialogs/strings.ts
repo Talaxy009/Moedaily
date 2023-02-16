@@ -6,6 +6,8 @@ export default new LocalizedStrings({
 		authorFliter: 'Author Fliter',
 		delete: 'Delete',
 		addAuthor: "Add Author's UID",
+		noUID: 'No UID, please add below',
+		moreThanTwenty: "Can't select more",
 		// ImageInfoDialog
 		author: 'Author',
 		time: 'Time',
@@ -25,6 +27,7 @@ export default new LocalizedStrings({
 		// TagsFliterDialog
 		tagsFliter: 'Tags Fliter',
 		addTags: 'Add Tags',
+		noTag: 'No tag, please add below',
 		// Actions
 		cancel: 'Cancel',
 		confirm: 'Confirm',
@@ -35,6 +38,8 @@ export default new LocalizedStrings({
 		authorFliter: '画师筛选',
 		delete: '删除',
 		addAuthor: '添加画师 UID',
+		noUID: '无画师 UID，请在下方添加',
+		moreThanTwenty: '无法选择更多',
 		// ImageInfoDialog
 		author: '作者',
 		time: '时间',
@@ -54,6 +59,7 @@ export default new LocalizedStrings({
 		// TagsFliterDialog
 		tagsFliter: '标签筛选',
 		addTags: '新建标签',
+		noTag: '无标签，请在下方添加',
 		// Actions
 		cancel: '取消',
 		confirm: '确认',

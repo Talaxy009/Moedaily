@@ -5,11 +5,13 @@ import {
 	Portal,
 	Dialog,
 	Button,
+	Caption,
 	TextInput,
 } from 'react-native-paper';
-import {View, StyleSheet, Vibration} from 'react-native';
+import {ScrollView, StyleSheet, Vibration} from 'react-native';
 import {getTags, storageTags} from '../../common/storage';
 import strings from './strings';
+import {useToast} from '../../utils/hooks';
 
 interface DialogProps {
 	onClose: () => void;
@@ -27,6 +29,7 @@ export default function TagsFliterDialog({
 	const [tags, setTags] = React.useState<Set<string>>();
 	const [delTag, setDelTag] = React.useState('');
 	const [newTag, setNewTag] = React.useState('');
+	const toast = useToast();
 
 	const handleAddTag = () => {
 		if (newTag && tags) {
@@ -52,7 +55,11 @@ export default function TagsFliterDialog({
 	};
 
 	const handleSelect = (value: string) => {
-		onSelect(value);
+		if (selected.size < 20) {
+			onSelect(value);
+		} else {
+			toast(strings.moreThanTwenty);
+		}
 	};
 
 	const handleDelete = (value: string) => {
@@ -75,10 +82,15 @@ export default function TagsFliterDialog({
 	return (
 		<Portal>
 			<Dialog visible={visible} onDismiss={onClose}>
-				<Dialog.Title>{strings.tagsFliter}</Dialog.Title>
+				<Dialog.Title>
+					{strings.tagsFliter} ({selected.size}/20)
+				</Dialog.Title>
 				<Dialog.Content>
-					<View style={styles.tagsBox}>
-						{tags &&
+					<ScrollView
+						style={styles.box}
+						contentContainerStyle={styles.boxContent}
+					>
+						{tags && tags.size > 0 ? (
 							Array.from(tags).map((v, i) => (
 								<Chip
 									key={i}
@@ -90,8 +102,13 @@ export default function TagsFliterDialog({
 								>
 									{v}
 								</Chip>
-							))}
-					</View>
+							))
+						) : (
+							<Caption style={styles.caption}>
+								{strings.noUID}
+							</Caption>
+						)}
+					</ScrollView>
 					{delTag ? (
 						<Text style={styles.delText} variant="bodyLarge">
 							{strings.delete}: {delTag} ?
@@ -127,10 +144,18 @@ export default function TagsFliterDialog({
 }
 
 const styles = StyleSheet.create({
-	tagsBox: {
+	box: {
+		marginBottom: 16,
+		minHeight: 64,
+		maxHeight: 128,
+	},
+	boxContent: {
+		justifyContent: 'center',
 		flexDirection: 'row',
 		flexWrap: 'wrap',
-		marginBottom: 16,
+	},
+	caption: {
+		alignSelf: 'center',
 	},
 	chip: {
 		margin: 4,

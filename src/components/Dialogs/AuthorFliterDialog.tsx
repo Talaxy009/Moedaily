@@ -6,11 +6,12 @@ import {
 	Dialog,
 	Button,
 	TextInput,
+	Caption,
 } from 'react-native-paper';
-import {View, StyleSheet, Vibration} from 'react-native';
-import strings from './strings';
-
+import {StyleSheet, Vibration, ScrollView} from 'react-native';
 import {getUIDs, storageUIDs} from '../../common/storage';
+import {useToast} from '../../utils/hooks';
+import strings from './strings';
 
 interface DialogProps {
 	onClose: () => void;
@@ -28,6 +29,7 @@ export default function AuthorFliterDialog({
 	const [uids, setUIDs] = React.useState<Set<string>>();
 	const [delUID, setDelUID] = React.useState('');
 	const [newUID, setNewUID] = React.useState('');
+	const toast = useToast();
 
 	const handleAddUID = () => {
 		if (newUID && uids) {
@@ -53,7 +55,11 @@ export default function AuthorFliterDialog({
 	};
 
 	const handleSelect = (value: string) => {
-		onSelect(value);
+		if (selected.size < 20) {
+			onSelect(value);
+		} else {
+			toast(strings.moreThanTwenty);
+		}
 	};
 
 	const handleDelete = (value: string) => {
@@ -76,10 +82,15 @@ export default function AuthorFliterDialog({
 	return (
 		<Portal>
 			<Dialog visible={visible} onDismiss={onClose}>
-				<Dialog.Title>{strings.authorFliter}</Dialog.Title>
+				<Dialog.Title>
+					{strings.authorFliter} ({selected.size}/20)
+				</Dialog.Title>
 				<Dialog.Content>
-					<View style={styles.tagsBox}>
-						{uids &&
+					<ScrollView
+						style={styles.box}
+						contentContainerStyle={styles.boxContent}
+					>
+						{uids && uids.size > 0 ? (
 							Array.from(uids).map((v, i) => (
 								<Chip
 									key={i}
@@ -91,8 +102,13 @@ export default function AuthorFliterDialog({
 								>
 									{v}
 								</Chip>
-							))}
-					</View>
+							))
+						) : (
+							<Caption style={styles.caption}>
+								{strings.noUID}
+							</Caption>
+						)}
+					</ScrollView>
 					{delUID ? (
 						<Text style={styles.delText} variant="bodyLarge">
 							{strings.delete}: {delUID}?
@@ -103,6 +119,7 @@ export default function AuthorFliterDialog({
 							value={newUID}
 							label={strings.addAuthor}
 							keyboardType="numeric"
+							textContentType="none"
 							onChangeText={(text) => setNewUID(text)}
 							right={
 								<TextInput.Icon
@@ -129,10 +146,18 @@ export default function AuthorFliterDialog({
 }
 
 const styles = StyleSheet.create({
-	tagsBox: {
+	box: {
+		marginBottom: 16,
+		minHeight: 64,
+		maxHeight: 128,
+	},
+	boxContent: {
+		justifyContent: 'center',
 		flexDirection: 'row',
 		flexWrap: 'wrap',
-		marginBottom: 16,
+	},
+	caption: {
+		alignSelf: 'center',
 	},
 	chip: {
 		margin: 4,
