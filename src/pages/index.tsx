@@ -1,6 +1,6 @@
 import React from 'react';
-import {FlatList, StyleSheet} from 'react-native';
-import {FAB, IconButton} from 'react-native-paper';
+import {FlatList, Vibration, StyleSheet} from 'react-native';
+import {FAB} from 'react-native-paper';
 import LocalizedStrings from 'react-native-localization';
 
 import {ImageInfoDialog} from '../components/Dialogs';
@@ -35,6 +35,11 @@ export default function IndexPage() {
 		setLoading((pre) => !pre);
 	};
 
+	const handleOpenDialog = () => {
+		Vibration.vibrate([0, 100, 0]);
+		setDialog(true);
+	};
+
 	React.useEffect(() => {
 		if (loading) {
 			getImage()
@@ -65,7 +70,11 @@ export default function IndexPage() {
 				keyExtractor={(i) => i.pid.toString()}
 				contentContainerStyle={styles.listContent}
 				renderItem={({item}) => (
-					<AutoImage img={item} onError={handleError} />
+					<AutoImage
+						img={item}
+						onError={handleError}
+						onLongPress={handleOpenDialog}
+					/>
 				)}
 			/>
 			<ImageInfoDialog
@@ -80,11 +89,6 @@ export default function IndexPage() {
 				style={styles.fab}
 				onPress={handleRefresh}
 			/>
-			<IconButton
-				style={styles.fib}
-				icon="information"
-				onPress={() => setDialog(true)}
-			/>
 		</Layout>
 	);
 }
@@ -96,11 +100,6 @@ const styles = StyleSheet.create({
 	fab: {
 		right: 16,
 		bottom: 16,
-		position: 'absolute',
-	},
-	fib: {
-		top: 16,
-		right: 16,
 		position: 'absolute',
 	},
 });
