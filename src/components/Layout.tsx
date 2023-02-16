@@ -23,6 +23,7 @@ export default function Layout({children}: {children: React.ReactNode}) {
 				{children}
 			</View>
 			<Snackbar
+				duration={5000}
 				visible={toast.open}
 				onDismiss={handleClose}
 				action={{
