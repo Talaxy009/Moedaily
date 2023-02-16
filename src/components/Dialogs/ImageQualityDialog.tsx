@@ -18,12 +18,6 @@ interface DialogProps {
 	quality: 0 | 1 | 2;
 }
 
-const selections = [
-	{title: '原始', description: '原始尺寸，要的就是一个体验'},
-	{title: '正常', description: '正常尺寸，不多不少刚刚好'},
-	{title: '压缩', description: '压缩尺寸，节流主义'},
-];
-
 export default function ImageInfoDialog({
 	visible = false,
 	onSelect,
@@ -39,7 +33,7 @@ export default function ImageInfoDialog({
 						value={quality.toString()}
 						onValueChange={(v) => onSelect(Number(v))}
 					>
-						{selections.map((v, i) => (
+						{strings.selections.map((v, i) => (
 							<TouchableNativeFeedback
 								key={i}
 								onPress={() => onSelect(i)}
