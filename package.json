@@ -9,8 +9,10 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "build:release": "cd android && ./gradlew assembleRelease",
-    "build:debug": "cd android && ./gradlew assembleDebug",
+    "apk:release": "cd android && ./gradlew assembleRelease",
+    "apk:debug": "cd android && ./gradlew assembleDebug",
+    "aab:release": "cd android && ./gradlew bundleRelease",
+    "aab:debug": "cd android && ./gradlew bundleDebug",
     "clean": "cd android && ./gradlew clean",
     "lint": "eslint .",
     "test": "jest"
