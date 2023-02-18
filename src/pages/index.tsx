@@ -36,7 +36,7 @@ export default function IndexPage() {
 	};
 
 	const handleOpenDialog = () => {
-		Vibration.vibrate([0, 100, 0]);
+		Vibration.vibrate([0, 10, 0]);
 		setDialog(true);
 	};
 

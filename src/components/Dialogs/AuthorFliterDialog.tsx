@@ -64,7 +64,7 @@ export default function AuthorFliterDialog({
 
 	const handleDelete = (value: string) => {
 		if (!delUID) {
-			Vibration.vibrate([0, 100, 0]);
+			Vibration.vibrate([0, 10, 0]);
 			setDelUID(value);
 		}
 	};

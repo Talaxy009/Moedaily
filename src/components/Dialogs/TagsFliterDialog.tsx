@@ -64,7 +64,7 @@ export default function TagsFliterDialog({
 
 	const handleDelete = (value: string) => {
 		if (!delTag) {
-			Vibration.vibrate([0, 100, 0]);
+			Vibration.vibrate([0, 10, 0]);
 			setDelTag(value);
 		}
 	};
