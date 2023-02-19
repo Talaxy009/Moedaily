@@ -10,9 +10,9 @@ import {RecoilRoot} from 'recoil';
 import {useColorScheme} from 'react-native';
 import Icons from 'react-native-vector-icons/Ionicons';
 import {
-	NavigationContainer,
-	DefaultTheme,
 	DarkTheme,
+	DefaultTheme,
+	NavigationContainer,
 } from '@react-navigation/native';
 import LocalizedStrings from 'react-native-localization';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
@@ -28,11 +28,11 @@ const {LightTheme: NavLightTheme, DarkTheme: NavDarkTheme} =
 		reactNavigationDark: DarkTheme,
 	});
 
-const HomeIcon = (p: any) => {
+const ImageIcon = (p: any) => {
 	return p.focused ? (
-		<Icons name="home" color={p.color} size={26} />
+		<Icons name="image" color={p.color} size={26} />
 	) : (
-		<Icons name="home-outline" color={p.color} size={26} />
+		<Icons name="image-outline" color={p.color} size={26} />
 	);
 };
 
@@ -56,13 +56,13 @@ export default function App(): JSX.Element {
 		<RecoilRoot>
 			<NavigationContainer theme={navTheme}>
 				<PaperProvider theme={theme}>
-					<Tab.Navigator initialRouteName="Home">
+					<Tab.Navigator initialRouteName="Index">
 						<Tab.Screen
-							name="Home"
+							name="Index"
 							component={IndexPage}
 							options={{
-								tabBarLabel: strings.home,
-								tabBarIcon: HomeIcon,
+								tabBarLabel: strings.index,
+								tabBarIcon: ImageIcon,
 							}}
 						/>
 						<Tab.Screen
@@ -82,11 +82,11 @@ export default function App(): JSX.Element {
 
 const strings = new LocalizedStrings({
 	en: {
-		home: 'Home',
+		index: 'Artwork',
 		settings: 'Setting',
 	},
 	zh: {
-		home: '首页',
+		index: '作品',
 		settings: '设置',
 	},
 });
