@@ -118,6 +118,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('C:\\Users\\x009b\\OneDrive\\Moedaily\\APPKEY.jks')
+            storePassword 'topnep753'
+            keyAlias 'TalaxyAPP'
+            keyPassword 'topnep753'
+        }
     }
     buildTypes {
         debug {
@@ -126,7 +132,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
