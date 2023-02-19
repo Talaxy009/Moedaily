@@ -24,6 +24,20 @@ export default new LocalizedStrings({
 		visitLink: 'Visit Link',
 		// ProxyServerDialog
 		proxySetting: 'Proxy Setting',
+		proxy: [
+			{
+				value: 'i.pixiv.cat',
+				description:
+					"Loading fast, can't directly access in mainland China",
+			},
+			{
+				value: 'i.pixiv.re',
+				description:
+					'Loading slow, can directly access in mainland China',
+			},
+			{value: 'i.pixiv.nl', description: 'Ditto, as a backup'},
+		],
+		manual: 'Manual configuration',
 		// TagsFliterDialog
 		tagsFliter: 'Tags Fliter',
 		addTags: 'Add Tags',
@@ -56,6 +70,15 @@ export default new LocalizedStrings({
 		visitLink: '访问链接',
 		// ProxyServerDialog
 		proxySetting: '反代配置',
+		proxy: [
+			{value: 'i.pixiv.cat', description: '速度快，中国大陆无法直接访问'},
+			{
+				value: 'i.pixiv.re',
+				description: '速度较慢，中国大陆可以直接访问',
+			},
+			{value: 'i.pixiv.nl', description: '同上，作为备用'},
+		],
+		manual: '手动配置',
 		// TagsFliterDialog
 		tagsFliter: '标签筛选',
 		addTags: '新建标签',

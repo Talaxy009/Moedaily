@@ -1,5 +1,14 @@
 import React from 'react';
-import {Portal, Dialog, Button, TextInput} from 'react-native-paper';
+import {View, StyleSheet, TouchableNativeFeedback} from 'react-native';
+import {
+	Text,
+	Title,
+	Portal,
+	Dialog,
+	Button,
+	TextInput,
+	RadioButton,
+} from 'react-native-paper';
 import strings from './strings';
 
 interface DialogProps {
@@ -15,30 +24,57 @@ export default function ProxyServerDialog({
 	onChange,
 	visible = false,
 }: DialogProps) {
-	const [proxy, setProxy] = React.useState(value);
-
-	const handleConfirm = () => {
-		onChange(proxy);
-		onClose();
-	};
+	const [proxy, setProxy] = React.useState('');
 
 	return (
 		<Portal>
 			<Dialog visible={visible} onDismiss={onClose}>
 				<Dialog.Title>{strings.proxySetting}</Dialog.Title>
 				<Dialog.Content>
-					<TextInput
-						value={proxy}
-						textContentType="URL"
-						placeholder="i.pixiv.re"
-						onChangeText={(text) => setProxy(text)}
-					/>
+					<RadioButton.Group value={value} onValueChange={onChange}>
+						{strings.proxy.map((v, i) => (
+							<TouchableNativeFeedback
+								key={i}
+								onPress={() => onChange(v.value)}
+							>
+								<View style={styles.bar}>
+									<View>
+										<Title>{v.value}</Title>
+										<Text>{v.description}</Text>
+									</View>
+									<RadioButton value={v.value} />
+								</View>
+							</TouchableNativeFeedback>
+						))}
+						<View style={styles.bar}>
+							<TextInput
+								dense
+								value={proxy}
+								style={styles.input}
+								textContentType="URL"
+								label={strings.manual}
+								onChangeText={setProxy}
+							/>
+							<RadioButton value={proxy} />
+						</View>
+					</RadioButton.Group>
 				</Dialog.Content>
 				<Dialog.Actions>
-					<Button onPress={onClose}>{strings.cancel}</Button>
-					<Button onPress={handleConfirm}>{strings.confirm}</Button>
+					<Button onPress={onClose}>{strings.confirm}</Button>
 				</Dialog.Actions>
 			</Dialog>
 		</Portal>
 	);
 }
+
+const styles = StyleSheet.create({
+	bar: {
+		marginVertical: 4,
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
+	},
+	input: {
+		width: '70%',
+	},
+});

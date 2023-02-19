@@ -89,7 +89,8 @@ export default function SettingsPage() {
 	const handleReset = () => {
 		const newSetting = {
 			...defaultSettings,
-			quality: settings?.quality,
+			quality: settings?.quality || 1,
+			proxy: settings?.proxy || '',
 		} as AppSettings;
 		setSettings(newSetting);
 		storageAppSetting(newSetting);
@@ -202,7 +203,7 @@ export default function SettingsPage() {
 				visible={dialog === 3}
 				onClose={handleCloseDialog}
 				onSelect={handleSelectQuality}
-				quality={settings ? settings.quality : 1}
+				quality={settings?.quality || 1}
 			/>
 			<ProxyServerDialog
 				visible={dialog === 4}
