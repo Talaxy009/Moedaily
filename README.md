@@ -1,8 +1,13 @@
 # 每日一萌
 
+![Banner](./assets/banner.png)
+
 为你推荐 Pixiv 好图！
 
 ## ✨ 功能亮点
+
+![Feature](./assets/feature.png)
+（涉及作品版权归原作者所有，如有冒犯烦请告知）
 
 - 推送精选 Pixiv 好图（By [Lolicon API](https://api.lolicon.app/#/setu)）
 - 支持配置画像标签
