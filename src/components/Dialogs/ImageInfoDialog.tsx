@@ -19,7 +19,7 @@ export default function ImageInfoDialog({
 	data,
 }: DialogProps) {
 	const handlePixiv = () =>
-		Linking.openURL(`https://pixiv.net/i/${data?.pid}`);
+		Linking.openURL(`https://www.pixiv.net/i/${data?.pid}`);
 
 	return (
 		<Portal>
