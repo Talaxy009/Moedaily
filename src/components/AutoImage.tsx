@@ -12,15 +12,21 @@ import type {ImageData} from '../common/types';
 interface AutoImageProps {
 	img: ImageData;
 	onError: () => void;
+	onPress: () => void;
 	onLongPress: () => void;
 }
 
-export default function AutoImage({img, onError, onLongPress}: AutoImageProps) {
+export default function AutoImage({
+	img,
+	onError,
+	onPress,
+	onLongPress,
+}: AutoImageProps) {
 	const url = img.urls.regular || img.urls.original || img.urls.small;
 	const miniUrl = img.urls.mini.replace('square', 'master');
 
 	return (
-		<TouchableWithoutFeedback onLongPress={onLongPress}>
+		<TouchableWithoutFeedback onLongPress={onLongPress} onPress={onPress}>
 			<View style={styles.root}>
 				<ImageBackground
 					style={styles.img}

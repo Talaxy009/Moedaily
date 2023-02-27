@@ -1,11 +1,13 @@
 import React from 'react';
 import {FlatList, Vibration, StyleSheet} from 'react-native';
-import {FAB} from 'react-native-paper';
 import LocalizedStrings from 'react-native-localization';
+import {FAB} from 'react-native-paper';
 
+import {ImageViewerModal} from '../components/Modals';
 import {ImageInfoDialog} from '../components/Dialogs';
 import AutoImage from '../components/AutoImage';
 import Layout from '../components/Layout';
+
 import useImageIndex, {useToast} from '../utils/hooks';
 import {getImage} from '../utils';
 
@@ -17,6 +19,7 @@ export default function IndexPage() {
 	const [img, setImg] = React.useState<ImageDataList>([]);
 	const [loading, setLoading] = React.useState(true);
 	const [dialog, setDialog] = React.useState(false);
+	const [modal, setModal] = React.useState(false);
 	const [imageIndex, onScroll, setImageIndex] = useImageIndex(0);
 	const toast = useToast();
 
@@ -74,6 +77,7 @@ export default function IndexPage() {
 					<AutoImage
 						img={item}
 						onError={handleError}
+						onPress={() => setModal(true)}
 						onLongPress={handleOpenDialog}
 					/>
 				)}
@@ -82,6 +86,11 @@ export default function IndexPage() {
 				visible={dialog}
 				data={img[imageIndex]}
 				onClose={() => setDialog(false)}
+			/>
+			<ImageViewerModal
+				visible={modal}
+				img={img[imageIndex]}
+				onClose={() => setModal(false)}
 			/>
 			<FAB
 				icon="reload"
