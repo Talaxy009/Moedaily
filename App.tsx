@@ -7,7 +7,7 @@ import {
 	MD3Theme,
 } from 'react-native-paper';
 import {RecoilRoot} from 'recoil';
-import {useColorScheme} from 'react-native';
+import {StatusBar, useColorScheme} from 'react-native';
 import Icons from 'react-native-vector-icons/Ionicons';
 import {
 	DarkTheme,
@@ -46,6 +46,7 @@ const SettingsIcon = (p: any) => {
 
 export default function App(): JSX.Element {
 	const isDarkMode = useColorScheme() === 'dark';
+	const barStyle = isDarkMode ? 'light-content' : 'dark-content';
 
 	const theme: MD3Theme = isDarkMode
 		? {...MD3DarkTheme, colors: darkColor}
@@ -56,6 +57,10 @@ export default function App(): JSX.Element {
 		<RecoilRoot>
 			<NavigationContainer theme={navTheme}>
 				<PaperProvider theme={theme}>
+					<StatusBar
+						barStyle={barStyle}
+						backgroundColor={theme.colors.background}
+					/>
 					<Tab.Navigator initialRouteName="Index">
 						<Tab.Screen
 							name="Index"
