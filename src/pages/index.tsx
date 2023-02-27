@@ -66,6 +66,7 @@ export default function IndexPage() {
 				pagingEnabled
 				ref={imageList}
 				windowSize={10}
+				style={styles.list}
 				onMomentumScrollEnd={onScroll}
 				keyExtractor={(i) => i.pid.toString()}
 				contentContainerStyle={styles.listContent}
@@ -94,8 +95,11 @@ export default function IndexPage() {
 }
 
 const styles = StyleSheet.create({
+	list: {
+		flex: 1,
+	},
 	listContent: {
-		alignItems: 'center',
+		height: '100%',
 	},
 	fab: {
 		right: 16,
