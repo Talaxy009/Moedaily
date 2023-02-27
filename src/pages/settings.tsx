@@ -169,7 +169,7 @@ export default function SettingsPage() {
 					<List.Subheader>{strings.about.title}</List.Subheader>
 					<List.Item
 						left={Icon.InfoIcon}
-						description="1.0.0"
+						description="1.0.1"
 						onPress={() => setDialog(5)}
 						title={strings.about.version}
 					/>
