@@ -14,3 +14,8 @@
 - Material You 设计风格
 - 开源、轻量、简洁
 - 吉尼斯最快社会性死亡记录
+
+## ⬇️ 下载
+
+- [APKPure](https://apkpure.com/p/com.talaxy.moedaily)
+- [GitHub](https://github.com/Talaxy009/Moedaily/releases)
