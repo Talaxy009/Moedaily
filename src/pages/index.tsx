@@ -5,6 +5,7 @@ import {FAB} from 'react-native-paper';
 
 import {ImageViewerModal} from '../components/Modals';
 import {ImageInfoDialog} from '../components/Dialogs';
+import HelpBanner from '../components/HelpBanner';
 import AutoImage from '../components/AutoImage';
 import Layout from '../components/Layout';
 
@@ -63,6 +64,7 @@ export default function IndexPage() {
 
 	return (
 		<Layout>
+			<HelpBanner />
 			<FlatList
 				data={img}
 				horizontal

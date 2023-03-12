@@ -44,3 +44,11 @@ export function storageUIDs(uids: Set<string>) {
 	const jsonValue = JSON.stringify(Array.from(uids));
 	return AsyncStorage.setItem('@UIDS', jsonValue);
 }
+
+export async function getInitState(): Promise<string | null> {
+	return AsyncStorage.getItem('@INIT_STATE');
+}
+
+export function storageInitState() {
+	return AsyncStorage.setItem('@INIT_STATE', 'true');
+}
