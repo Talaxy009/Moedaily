@@ -13,15 +13,17 @@ export default function Layout({children}: {children: React.ReactNode}) {
 	const handleClose = () => setToast((p) => ({...p, open: false}));
 
 	return (
-		<Portal.Host>
-			<View
-				style={[
-					styles.root,
-					{backgroundColor: theme.colors.background},
-				]}
-			>
-				{children}
-			</View>
+		<>
+			<Portal.Host>
+				<View
+					style={[
+						styles.root,
+						{backgroundColor: theme.colors.background},
+					]}
+				>
+					{children}
+				</View>
+			</Portal.Host>
 			<Snackbar
 				duration={5000}
 				visible={toast.open}
@@ -33,7 +35,7 @@ export default function Layout({children}: {children: React.ReactNode}) {
 			>
 				{toast.text}
 			</Snackbar>
-		</Portal.Host>
+		</>
 	);
 }
 
