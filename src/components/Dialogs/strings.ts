@@ -6,12 +6,17 @@ export default new LocalizedStrings({
 		authorFliter: 'Author Fliter',
 		delete: 'Delete',
 		addAuthor: "Add Author's UID",
+		addUIDsucc: 'UID added successfully',
 		noUID: 'No UID, please add below',
 		moreThanTwenty: "Can't select more",
 		// ImageInfoDialog
 		author: 'Author',
 		time: 'Time',
 		tags: 'Tags',
+		import: 'Import',
+		importTags: 'Import tags',
+		importTagsSucc: 'Tags imported successfully',
+		copied: 'Copied UID to clipboard',
 		openPixiv: 'Open in Pixiv',
 		// ImageQualityDialog
 		imgQuality: 'Image Quality',
@@ -40,7 +45,8 @@ export default new LocalizedStrings({
 		manual: 'Manual configuration',
 		// TagsFliterDialog
 		tagsFliter: 'Tags Fliter',
-		addTags: 'Add Tags',
+		addTag: 'Add Tag',
+		addTagSucc: 'Tag added successfully',
 		noTag: 'No tag, please add below',
 		// Actions
 		cancel: 'Cancel',
@@ -52,12 +58,17 @@ export default new LocalizedStrings({
 		authorFliter: '画师筛选',
 		delete: '删除',
 		addAuthor: '添加画师 UID',
+		addUIDsucc: '成功添加 UID',
 		noUID: '无画师 UID，请在下方添加',
 		moreThanTwenty: '无法选择更多',
 		// ImageInfoDialog
 		author: '作者',
 		time: '时间',
 		tags: '标签',
+		import: '导入',
+		importTags: '导入标签',
+		importTagsSucc: '成功导入标签',
+		copied: '已复制 UID 至剪贴板',
 		openPixiv: '在 Pixiv 中打开',
 		// ImageQualityDialog
 		imgQuality: '画像质量',
@@ -81,7 +92,8 @@ export default new LocalizedStrings({
 		manual: '手动配置',
 		// TagsFliterDialog
 		tagsFliter: '标签筛选',
-		addTags: '新建标签',
+		addTag: '添加标签',
+		addTagSucc: '成功添加标签',
 		noTag: '无标签，请在下方添加',
 		// Actions
 		cancel: '取消',

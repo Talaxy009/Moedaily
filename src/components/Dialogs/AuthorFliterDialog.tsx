@@ -38,6 +38,7 @@ export default function AuthorFliterDialog({
 			setUIDs(tmp);
 			setNewUID('');
 			storageUIDs(tmp);
+			toast(strings.addUIDsucc);
 		}
 	};
 

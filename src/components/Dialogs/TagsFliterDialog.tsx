@@ -38,6 +38,7 @@ export default function TagsFliterDialog({
 			setTags(tmp);
 			setNewTag('');
 			storageTags(tmp);
+			toast(strings.addTagSucc);
 		}
 	};
 
@@ -77,7 +78,7 @@ export default function TagsFliterDialog({
 				setTags(new Set());
 			}
 		});
-	}, []);
+	}, [visible]);
 
 	return (
 		<Portal>
@@ -116,7 +117,7 @@ export default function TagsFliterDialog({
 					) : (
 						<TextInput
 							dense
-							label={strings.addTags}
+							label={strings.addTag}
 							value={newTag}
 							onChangeText={(text) => setNewTag(text)}
 							right={
