@@ -2190,6 +2190,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/clipboard@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "@react-native-community/clipboard@npm:1.5.1"
+  peerDependencies:
+    react: ">=16.0"
+    react-native: ">=0.57.0"
+  checksum: 61f993b864804ef43de3a4b33b080d2310d491d7d13bc504e75326a841e0f2715b7c65212cae420fa200688be8881ed4b6731e0f4bad8de2d340c401f598bcea
+  languageName: node
+  linkType: hard
+
 "@react-native-community/eslint-config@npm:^3.2.0":
   version: 3.2.0
   resolution: "@react-native-community/eslint-config@npm:3.2.0"
@@ -7473,6 +7483,7 @@ __metadata:
     "@babel/runtime": ^7.20.0
     "@openspacelabs/react-native-zoomable-view": ^2.1.1
     "@react-native-async-storage/async-storage": ^1.17.11
+    "@react-native-community/clipboard": ^1.5.1
     "@react-native-community/eslint-config": ^3.2.0
     "@react-navigation/material-bottom-tabs": ^6.2.15
     "@react-navigation/native": ^6.1.6
@@ -7494,7 +7505,7 @@ __metadata:
     react-native-screens: ^3.20.0
     react-native-vector-icons: ^9.2.0
     react-test-renderer: 18.2.0
-    recoil: ^0.7.6
+    recoil: ^0.7.7
     typescript: 4.8.4
   languageName: unknown
   linkType: soft
@@ -8541,9 +8552,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"recoil@npm:^0.7.6":
-  version: 0.7.6
-  resolution: "recoil@npm:0.7.6"
+"recoil@npm:^0.7.7":
+  version: 0.7.7
+  resolution: "recoil@npm:0.7.7"
   dependencies:
     hamt_plus: 1.0.2
   peerDependencies:
@@ -8553,7 +8564,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 2b31dd29a7e0b369bc986a16f7253006776845144684c9e38bb6760e4ea954c5d7dc682aaf88e815e69098b8dea3ff62b6fa4e6c156157a29d2d9cb824db1779
+  checksum: 65edecbcb8d2cde89bfd61ec679c200483472a6cd343c33e4e9142b6ce524fb17d1fecc2bfd8c392926aaa8178c81457f165b32abce2a9662f51f98822c0a9cc
   languageName: node
   linkType: hard
 
