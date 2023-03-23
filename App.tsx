@@ -18,6 +18,7 @@ import LocalizedStrings from 'react-native-localization';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 
 import IndexPage from './src/pages/index';
+import {TagsProvider} from './src/utils/tags';
 import SettingsPage from './src/pages/settings';
 import {darkColor, lightColor} from './src/common/color';
 
@@ -55,32 +56,34 @@ export default function App(): JSX.Element {
 
 	return (
 		<RecoilRoot>
-			<NavigationContainer theme={navTheme}>
-				<PaperProvider theme={theme}>
-					<StatusBar
-						barStyle={barStyle}
-						backgroundColor={theme.colors.background}
-					/>
-					<Tab.Navigator initialRouteName="Index">
-						<Tab.Screen
-							name="Index"
-							component={IndexPage}
-							options={{
-								tabBarLabel: strings.index,
-								tabBarIcon: ImageIcon,
-							}}
+			<TagsProvider>
+				<NavigationContainer theme={navTheme}>
+					<PaperProvider theme={theme}>
+						<StatusBar
+							barStyle={barStyle}
+							backgroundColor={theme.colors.background}
 						/>
-						<Tab.Screen
-							name="Settings"
-							component={SettingsPage}
-							options={{
-								tabBarLabel: strings.settings,
-								tabBarIcon: SettingsIcon,
-							}}
-						/>
-					</Tab.Navigator>
-				</PaperProvider>
-			</NavigationContainer>
+						<Tab.Navigator initialRouteName="Index">
+							<Tab.Screen
+								name="Index"
+								component={IndexPage}
+								options={{
+									tabBarLabel: strings.index,
+									tabBarIcon: ImageIcon,
+								}}
+							/>
+							<Tab.Screen
+								name="Settings"
+								component={SettingsPage}
+								options={{
+									tabBarLabel: strings.settings,
+									tabBarIcon: SettingsIcon,
+								}}
+							/>
+						</Tab.Navigator>
+					</PaperProvider>
+				</NavigationContainer>
+			</TagsProvider>
 		</RecoilRoot>
 	);
 }

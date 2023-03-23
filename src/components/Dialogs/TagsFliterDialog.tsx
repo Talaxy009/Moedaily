@@ -9,9 +9,10 @@ import {
 	TextInput,
 } from 'react-native-paper';
 import {ScrollView, StyleSheet, Vibration} from 'react-native';
-import {getTags, storageTags} from '../../common/storage';
-import strings from './strings';
+
 import {useToast} from '../../utils/hooks';
+import {useTags} from '../../utils/tags';
+import strings from './strings';
 
 interface DialogProps {
 	onClose: () => void;
@@ -26,32 +27,26 @@ export default function TagsFliterDialog({
 	selected,
 	visible = false,
 }: DialogProps) {
-	const [tags, setTags] = React.useState<Set<string>>();
+	const [tags, {addTags, delTags}] = useTags();
 	const [delTag, setDelTag] = React.useState('');
 	const [newTag, setNewTag] = React.useState('');
 	const toast = useToast();
 
 	const handleAddTag = () => {
-		if (newTag && tags) {
-			const tmp = tags;
-			tmp.add(newTag);
-			setTags(tmp);
+		if (newTag) {
+			addTags(newTag);
 			setNewTag('');
-			storageTags(tmp);
 			toast(strings.addTagSucc);
 		}
 	};
 
 	const handleDelTag = () => {
-		if (delTag && tags) {
-			const tmp = tags;
-			tmp.delete(delTag);
-			setTags(tmp);
-			setDelTag('');
-			storageTags(tmp);
+		if (delTag) {
+			delTags(delTag);
 			if (selected.has(delTag)) {
 				onSelect(delTag);
 			}
+			setDelTag('');
 		}
 	};
 
@@ -69,16 +64,6 @@ export default function TagsFliterDialog({
 			setDelTag(value);
 		}
 	};
-
-	React.useEffect(() => {
-		getTags().then((v) => {
-			if (v) {
-				setTags(v);
-			} else {
-				setTags(new Set());
-			}
-		});
-	}, [visible]);
 
 	return (
 		<Portal>

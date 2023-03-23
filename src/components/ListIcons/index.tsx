@@ -11,6 +11,7 @@ export const AccFilterIcon: Icon = (p) => (
 export const BrushOffIcon: Icon = (p) => <List.Icon {...p} icon="brush-off" />;
 export const WrenchIcon: Icon = (p) => <List.Icon {...p} icon="wrench" />;
 export const LinkIcon: Icon = (p) => <List.Icon {...p} icon="link" />;
+export const RunIcon: Icon = (p) => <List.Icon {...p} icon="run" />;
 export const ReloadIcon: Icon = (p) => <List.Icon {...p} icon="reload" />;
 export const FmtColorIcon: Icon = (p) => (
 	<List.Icon {...p} icon="format-color-fill" />

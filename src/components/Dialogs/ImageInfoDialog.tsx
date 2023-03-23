@@ -1,10 +1,10 @@
 import React from 'react';
-import {Linking, ScrollView, StyleSheet} from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
+import {Linking, ScrollView, StyleSheet} from 'react-native';
 import {Button, Dialog, Portal, List, Chip} from 'react-native-paper';
 
-import {getTags, storageTags} from '../../common/storage';
 import {ClockIcon, AccIcon, TagIcon} from '../ListIcons';
+import {useTagsAction} from '../../utils/tags';
 import {useToast} from '../../utils/hooks';
 import strings from './strings';
 
@@ -22,8 +22,9 @@ export default function ImageInfoDialog({
 	data,
 }: DialogProps) {
 	const toast = useToast();
+	const {addTags} = useTagsAction();
 	const [tagMode, setTagMode] = React.useState(false);
-	const [tags, setTags] = React.useState(new Set<string>());
+	const [selected, setSelected] = React.useState(new Set<string>());
 
 	const handleClose = () => {
 		onClose();
@@ -41,28 +42,24 @@ export default function ImageInfoDialog({
 	};
 
 	const handleTagsMode = () => {
-		setTags(new Set<string>());
+		setSelected(new Set<string>());
 		setTagMode(true);
 	};
 
 	const handleSelect = (v: string) => {
-		const newTags = new Set([...tags]);
+		const newTags = new Set([...selected]);
 		if (newTags.has(v)) {
 			newTags.delete(v);
 		} else {
 			newTags.add(v);
 		}
-		setTags(newTags);
+		setSelected(newTags);
 	};
 
 	const handleAddTags = () => {
-		getTags().then((v) => {
-			const n = v || new Set<string>();
-			tags.forEach((t) => n.add(t));
-			storageTags(n);
-			toast(strings.importTagsSucc);
-			handleClose();
-		});
+		addTags(selected);
+		toast(strings.importTagsSucc);
+		handleClose();
 	};
 
 	return (
@@ -82,8 +79,8 @@ export default function ImageInfoDialog({
 									key={i}
 									style={styles.chip}
 									onPress={() => handleSelect(v)}
-									icon={tags.has(v) ? 'check' : undefined}
-									mode={tags.has(v) ? 'flat' : 'outlined'}
+									icon={selected.has(v) ? 'check' : undefined}
+									mode={selected.has(v) ? 'flat' : 'outlined'}
 								>
 									{v}
 								</Chip>

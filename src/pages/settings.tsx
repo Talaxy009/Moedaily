@@ -7,14 +7,17 @@ import LocalizedStrings from 'react-native-localization';
 import * as Icon from '../components/ListIcons';
 import Layout from '../components/Layout';
 import {
+	R18Dialog,
 	OpenLinkDialog,
 	TagsFliterDialog,
 	ProxyServerDialog,
 	AuthorFliterDialog,
 	ImageQualityDialog,
 } from '../components/Dialogs';
+import {useVersionName} from '../utils/hooks';
 import {getAppSetting, storageAppSetting} from '../common/storage';
 
+import {useTagsValue} from '../utils/tags';
 import type {AppSettings} from '../common/types';
 
 const defaultSettings = {
@@ -27,6 +30,8 @@ const defaultSettings = {
 } as AppSettings;
 
 export default function SettingsPage() {
+	const tags = useTagsValue();
+	const versionName = useVersionName();
 	const [dialog, setDialog] = React.useState(0);
 	const [settings, setSettings] = React.useState<AppSettings>();
 
@@ -57,6 +62,16 @@ export default function SettingsPage() {
 				uid.add(v);
 			}
 			return {...pre, uid};
+		});
+	};
+
+	const handleSelectR18 = (r: number) => {
+		setSettings((pre) => {
+			if (!pre) {
+				return;
+			}
+			const r18 = r as 0 | 1 | 2;
+			return {...pre, r18};
 		});
 	};
 
@@ -127,6 +142,13 @@ export default function SettingsPage() {
 						left={Icon.AccFilterIcon}
 						onPress={() => setDialog(2)}
 					/>
+					{tags.has('R-18') && (
+						<List.Item
+							title={strings.filter.r18}
+							left={Icon.RunIcon}
+							onPress={() => setDialog(3)}
+						/>
+					)}
 					<List.Item
 						title={strings.filter.ai}
 						left={Icon.BrushOffIcon}
@@ -149,12 +171,12 @@ export default function SettingsPage() {
 					<List.Item
 						title={strings.image.quality}
 						left={Icon.ImgSizeIcon}
-						onPress={() => setDialog(3)}
+						onPress={() => setDialog(4)}
 					/>
 					<List.Item
 						title={strings.image.proxy}
 						left={Icon.LinkIcon}
-						onPress={() => setDialog(4)}
+						onPress={() => setDialog(5)}
 					/>
 				</List.Section>
 				{/* <List.Section>
@@ -169,21 +191,21 @@ export default function SettingsPage() {
 					<List.Subheader>{strings.about.title}</List.Subheader>
 					<List.Item
 						left={Icon.InfoIcon}
-						description="1.0.1"
-						onPress={() => setDialog(5)}
+						description={versionName}
+						onPress={() => setDialog(6)}
 						title={strings.about.version}
 					/>
 					<List.Item
 						left={Icon.AccIcon}
 						description="Talaxy"
-						onPress={() => setDialog(6)}
+						onPress={() => setDialog(7)}
 						title={strings.about.author}
 					/>
 					<List.Item
 						left={Icon.ServerIcon}
 						description="Lolicon API"
 						title={strings.about.api}
-						onPress={() => setDialog(7)}
+						onPress={() => setDialog(8)}
 					/>
 				</List.Section>
 			</ScrollView>
@@ -199,30 +221,36 @@ export default function SettingsPage() {
 				onSelect={handleSelectUID}
 				selected={settings?.uid || new Set()}
 			/>
-			<ImageQualityDialog
+			<R18Dialog
 				visible={dialog === 3}
+				r18={settings?.r18 || 0}
+				onSelect={handleSelectR18}
+				onClose={handleCloseDialog}
+			/>
+			<ImageQualityDialog
+				visible={dialog === 4}
 				onClose={handleCloseDialog}
 				onSelect={handleSelectQuality}
 				quality={settings?.quality || 1}
 			/>
 			<ProxyServerDialog
-				visible={dialog === 4}
+				visible={dialog === 5}
 				onClose={handleCloseDialog}
 				onChange={handelChangeProxy}
 				value={settings?.proxy || ''}
 			/>
 			<OpenLinkDialog
-				visible={dialog === 5}
+				visible={dialog === 6}
 				onClose={handleCloseDialog}
 				url="https://github.com/Talaxy009/Moedaily"
 			/>
 			<OpenLinkDialog
-				visible={dialog === 6}
+				visible={dialog === 7}
 				onClose={handleCloseDialog}
 				url="https://www.talaxy.site/"
 			/>
 			<OpenLinkDialog
-				visible={dialog === 7}
+				visible={dialog === 8}
 				onClose={handleCloseDialog}
 				url="https://api.lolicon.app/#/setu"
 			/>
@@ -236,6 +264,7 @@ const strings = new LocalizedStrings({
 			title: 'Filter Settings',
 			tag: 'Tags Filter',
 			author: 'Authors Fliter',
+			r18: 'R18',
 			ai: 'Exclude AI works',
 			reset: 'Reset Fliter',
 		},
@@ -256,6 +285,7 @@ const strings = new LocalizedStrings({
 			title: '筛选设置',
 			tag: '标签筛选',
 			author: '画师筛选',
+			r18: 'R18',
 			ai: '排除 AI 作品',
 			reset: '重置筛选配置',
 		},
