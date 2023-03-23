@@ -20,13 +20,16 @@ export default new LocalizedStrings({
 		openPixiv: 'Open in Pixiv',
 		// ImageQualityDialog
 		imgQuality: 'Image Quality',
-		selections: [
+		qualitySelections: [
 			{title: 'Origin', description: 'Original size, more detail'},
 			{title: 'Normal', description: 'Normal size, just enough'},
 			{title: 'Small', description: 'Small size, fast loading'},
 		],
 		// OpenLinkDialog
 		visitLink: 'Visit Link',
+		// R18Dialog
+		r18: 'R18',
+		r18Selections: ['No R18', 'Only R18', 'Allow R18'],
 		// ProxyServerDialog
 		proxySetting: 'Proxy Setting',
 		proxy: [
@@ -72,11 +75,14 @@ export default new LocalizedStrings({
 		openPixiv: '在 Pixiv 中打开',
 		// ImageQualityDialog
 		imgQuality: '画像质量',
-		selections: [
+		qualitySelections: [
 			{title: '原始', description: '原始尺寸，要的就是一个体验'},
 			{title: '正常', description: '正常尺寸，不多不少刚刚好'},
 			{title: '压缩', description: '压缩尺寸，节流主义'},
 		],
+		// R18Dialog
+		r18: 'R18',
+		r18Selections: ['禁止 R18', '只要 R18', '允许 R18'],
 		// OpenLinkDialog
 		visitLink: '访问链接',
 		// ProxyServerDialog
