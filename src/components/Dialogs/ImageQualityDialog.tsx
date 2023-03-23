@@ -18,7 +18,7 @@ interface DialogProps {
 	quality: 0 | 1 | 2;
 }
 
-export default function ImageInfoDialog({
+export default function ImageQualityDialog({
 	visible = false,
 	onSelect,
 	onClose,
@@ -33,19 +33,20 @@ export default function ImageInfoDialog({
 						value={quality.toString()}
 						onValueChange={(v) => onSelect(Number(v))}
 					>
-						{strings.selections.map((v, i) => (
-							<TouchableNativeFeedback
-								key={i}
-								onPress={() => onSelect(i)}
-							>
-								<View style={styles.bar}>
-									<View>
-										<Title>{v.title}</Title>
-										<Text>{v.description}</Text>
+						{strings.qualitySelections.map((v, i) => (
+							<View key={i} style={styles.box}>
+								<TouchableNativeFeedback
+									onPress={() => onSelect(i)}
+								>
+									<View style={styles.bar}>
+										<View style={styles.textArea}>
+											<Title>{v.title}</Title>
+											<Text>{v.description}</Text>
+										</View>
+										<RadioButton value={i.toString()} />
 									</View>
-									<RadioButton value={i.toString()} />
-								</View>
-							</TouchableNativeFeedback>
+								</TouchableNativeFeedback>
+							</View>
 						))}
 					</RadioButton.Group>
 				</Dialog.Content>
@@ -58,10 +59,18 @@ export default function ImageInfoDialog({
 }
 
 const styles = StyleSheet.create({
-	bar: {
+	box: {
+		borderRadius: 16,
 		marginVertical: 4,
+		overflow: 'hidden',
+	},
+	bar: {
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between',
+	},
+	textArea: {
+		paddingHorizontal: 8,
+		paddingVertical: 4,
 	},
 });
