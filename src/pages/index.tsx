@@ -24,11 +24,6 @@ export default function IndexPage() {
 	const [imageIndex, onScroll, setImageIndex] = useImageIndex(0);
 	const toast = useToast();
 
-	const handleError = () => {
-		toast(strings.imgLoadFailed);
-		setLoading(false);
-	};
-
 	const handleRefresh = () => {
 		if (!loading && imageIndex > 0) {
 			setImageIndex(0);
@@ -49,7 +44,6 @@ export default function IndexPage() {
 			getImage()
 				.then(({data}) => {
 					setImg(data);
-					setLoading(false);
 					if (data.length === 0) {
 						toast(strings.noData);
 					}
@@ -57,6 +51,9 @@ export default function IndexPage() {
 				.catch((e) => {
 					console.log(e);
 					toast(strings.requestFailed);
+				})
+				.finally(() => {
+					setLoading(false);
 				});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,7 +75,6 @@ export default function IndexPage() {
 				renderItem={({item}) => (
 					<AutoImage
 						img={item}
-						onError={handleError}
 						onPress={() => setModal(true)}
 						onLongPress={handleOpenDialog}
 					/>
@@ -121,12 +117,10 @@ const styles = StyleSheet.create({
 
 const strings = new LocalizedStrings({
 	en: {
-		imgLoadFailed: 'Failed to load this image',
 		requestFailed: 'Request Failed',
 		noData: 'No Artwork, please adjust filter',
 	},
 	zh: {
-		imgLoadFailed: '无法加载此图片',
 		requestFailed: '请求出错',
 		noData: '没有作品，请调整您的筛选条件',
 	},

@@ -6,28 +6,51 @@ import {
 	ImageBackground,
 	TouchableWithoutFeedback,
 } from 'react-native';
+import {Text, useTheme} from 'react-native-paper';
+import LocalizedStrings from 'react-native-localization';
+import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import type {ImageData} from '../common/types';
 
 interface AutoImageProps {
 	img: ImageData;
-	onError: () => void;
 	onPress: () => void;
 	onLongPress: () => void;
 }
 
-export default function AutoImage({
-	img,
-	onError,
-	onPress,
-	onLongPress,
-}: AutoImageProps) {
+export default function AutoImage({img, onPress, onLongPress}: AutoImageProps) {
 	const url = img.urls.regular || img.urls.original || img.urls.small;
 	const miniUrl = img.urls.mini.replace('square', 'master');
 
+	const theme = useTheme();
+	const [err, setErr] = React.useState(false);
+
+	const handlePress = () => {
+		if (err) {
+			onLongPress();
+		} else {
+			onPress();
+		}
+	};
+
 	return (
-		<TouchableWithoutFeedback onLongPress={onLongPress} onPress={onPress}>
+		<TouchableWithoutFeedback
+			onLongPress={onLongPress}
+			onPress={handlePress}
+		>
 			<View style={styles.root}>
+				{err && (
+					<View style={[styles.img, styles.errBox]}>
+						<Icons
+							size={64}
+							name="image-remove"
+							color={theme.colors.outline}
+						/>
+						<Text style={styles.errTxt}>
+							{strings.imgLoadFailed}
+						</Text>
+					</View>
+				)}
 				<ImageBackground
 					style={styles.img}
 					resizeMode="contain"
@@ -36,7 +59,7 @@ export default function AutoImage({
 					}}
 				/>
 				<ImageBackground
-					onError={onError}
+					onError={() => setErr(true)}
 					style={styles.img}
 					resizeMode="contain"
 					source={{
@@ -56,9 +79,25 @@ const styles = StyleSheet.create({
 		width,
 		height: '100%',
 	},
+	errBox: {
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	errTxt: {
+		marginVertical: 16,
+	},
 	img: {
 		width: '100%',
 		height: '100%',
 		position: 'absolute',
+	},
+});
+
+const strings = new LocalizedStrings({
+	en: {
+		imgLoadFailed: 'Failed to load this image',
+	},
+	zh: {
+		imgLoadFailed: '无法加载此图片',
 	},
 });
