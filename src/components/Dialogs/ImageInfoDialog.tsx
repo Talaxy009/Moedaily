@@ -57,6 +57,10 @@ export default function ImageInfoDialog({
 	};
 
 	const handleAddTags = () => {
+		if (selected.size === 0) {
+			toast(strings.noTagSelected);
+			return;
+		}
 		addTags(selected);
 		toast(strings.importTagsSucc);
 		handleClose();
