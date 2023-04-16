@@ -15,12 +15,12 @@ import {
 	NavigationContainer,
 } from '@react-navigation/native';
 import LocalizedStrings from 'react-native-localization';
+import {useMaterial3Theme} from '@pchmn/expo-material3-theme';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 
 import IndexPage from './src/pages/index';
 import {TagsProvider} from './src/utils/tags';
 import SettingsPage from './src/pages/settings';
-import {darkColor, lightColor} from './src/common/color';
 
 const Tab = createMaterialBottomTabNavigator();
 const {LightTheme: NavLightTheme, DarkTheme: NavDarkTheme} =
@@ -47,21 +47,22 @@ const SettingsIcon = (p: any) => {
 
 export default function App(): JSX.Element {
 	const isDarkMode = useColorScheme() === 'dark';
+	const {theme} = useMaterial3Theme({fallbackSourceColor: '#009ba1'});
 	const barStyle = isDarkMode ? 'light-content' : 'dark-content';
 
-	const theme: MD3Theme = isDarkMode
-		? {...MD3DarkTheme, colors: darkColor}
-		: {...MD3LightTheme, colors: lightColor};
+	const paperTheme: MD3Theme = isDarkMode
+		? {...MD3DarkTheme, colors: theme.dark}
+		: {...MD3LightTheme, colors: theme.light};
 	const navTheme = isDarkMode ? NavDarkTheme : NavLightTheme;
 
 	return (
 		<RecoilRoot>
 			<TagsProvider>
 				<NavigationContainer theme={navTheme}>
-					<PaperProvider theme={theme}>
+					<PaperProvider theme={paperTheme}>
 						<StatusBar
 							barStyle={barStyle}
-							backgroundColor={theme.colors.background}
+							backgroundColor={paperTheme.colors.surface}
 						/>
 						<Tab.Navigator initialRouteName="Index">
 							<Tab.Screen
