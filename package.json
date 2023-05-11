@@ -1,58 +1,74 @@
 {
-  "name": "moedaily",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Moe Daily APP",
-  "author": "Talaxy",
-  "license": "GPL-3.0",
-  "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
-    "apk:release": "cd android && ./gradlew assembleRelease",
-    "apk:debug": "cd android && ./gradlew assembleDebug",
-    "aab:release": "cd android && ./gradlew bundleRelease",
-    "aab:debug": "cd android && ./gradlew bundleDebug",
-    "clean": "cd android && ./gradlew clean",
-    "lint": "eslint .",
-    "test": "jest"
-  },
-  "dependencies": {
-    "@openspacelabs/react-native-zoomable-view": "^2.1.1",
-    "@pchmn/expo-material3-theme": "^1.0.1",
-    "@react-native-async-storage/async-storage": "^1.17.12",
-    "@react-native-community/clipboard": "^1.5.1",
-    "@react-navigation/material-bottom-tabs": "^6.2.15",
-    "@react-navigation/native": "^6.1.6",
-    "expo": "^48.0.11",
-    "react": "18.2.0",
-    "react-native": "0.71.6",
-    "react-native-localization": "^2.3.1",
-    "react-native-paper": "^5.6.0",
-    "react-native-safe-area-context": "^4.5.0",
-    "react-native-screens": "^3.20.0",
-    "react-native-vector-icons": "^9.2.0",
-    "recoil": "^0.7.7"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "@babel/preset-env": "^7.20.0",
-    "@babel/runtime": "^7.20.0",
-    "@react-native-community/eslint-config": "^3.2.0",
-    "@tsconfig/react-native": "^2.0.2",
-    "@types/jest": "^29.2.1",
-    "@types/react": "^18.0.24",
-    "@types/react-native-vector-icons": "^6.4.13",
-    "@types/react-test-renderer": "^18.0.0",
-    "babel-jest": "^29.2.1",
-    "eslint": "^8.19.0",
-    "jest": "^29.2.1",
-    "metro-react-native-babel-preset": "0.75.1",
-    "prettier": "^2.4.1",
-    "react-test-renderer": "18.2.0",
-    "typescript": "5.0.2"
-  },
-  "jest": {
-    "preset": "react-native"
-  }
+	"name": "moedaily",
+	"version": "1.1.2",
+	"private": true,
+	"description": "Moe Daily APP",
+	"author": "Talaxy",
+	"license": "GPL-3.0",
+	"keywords": [
+		"android",
+		"material-design",
+		"loliconapi"
+	],
+	"scripts": {
+		"android": "react-native run-android",
+		"ios": "react-native run-ios",
+		"start": "react-native start",
+		"apk:release": "cd android && ./gradlew assembleRelease",
+		"apk:debug": "cd android && ./gradlew assembleDebug",
+		"aab:release": "cd android && ./gradlew bundleRelease",
+		"aab:debug": "cd android && ./gradlew bundleDebug",
+		"clean": "cd android && ./gradlew clean",
+		"lint": "eslint .",
+		"test": "jest"
+	},
+	"dependencies": {
+		"@openspacelabs/react-native-zoomable-view": "^2.1.1",
+		"@pchmn/expo-material3-theme": "^1.0.1",
+		"@react-native-async-storage/async-storage": "^1.18.1",
+		"@react-native-community/clipboard": "^1.5.1",
+		"@react-navigation/material-bottom-tabs": "^6.2.15",
+		"@react-navigation/native": "^6.1.6",
+		"expo": "^48.0.16",
+		"react": "18.2.0",
+		"react-native": "0.71.8",
+		"react-native-localization": "^2.3.1",
+		"react-native-paper": "^5.7.2",
+		"react-native-safe-area-context": "^4.5.2",
+		"react-native-screens": "^3.20.0",
+		"react-native-vector-icons": "^9.2.0",
+		"recoil": "^0.7.7"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.20.0",
+		"@babel/preset-env": "^7.20.0",
+		"@babel/runtime": "^7.20.0",
+		"@react-native-community/eslint-config": "^3.2.0",
+		"@tsconfig/react-native": "^2.0.2",
+		"@types/jest": "^29.2.1",
+		"@types/react": "^18.0.24",
+		"@types/react-native-vector-icons": "^6.4.13",
+		"@types/react-test-renderer": "^18.0.0",
+		"babel-jest": "^29.2.1",
+		"eslint": "^8.19.0",
+		"jest": "^29.2.1",
+		"metro-react-native-babel-preset": "0.75.1",
+		"prettier": "^2.4.1",
+		"react-test-renderer": "18.2.0",
+		"typescript": "5.0.4"
+	},
+	"jest": {
+		"preset": "react-native"
+	},
+	"expo": {
+		"autolinking": {
+			"exclude": [
+				"expo-font",
+				"expo-asset",
+				"expo-constants",
+				"expo-keep-awake",
+				"expo-file-system"
+			]
+		}
+	}
 }
