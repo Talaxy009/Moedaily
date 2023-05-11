@@ -2,6 +2,7 @@ import React from 'react';
 import {ScrollView} from 'react-native';
 import {List, Switch} from 'react-native-paper';
 import LocalizedStrings from 'react-native-localization';
+import {nativeApplicationVersion} from 'expo-application';
 
 // import ColorPoint from '../components/ColorPoint';
 import * as Icon from '../components/ListIcons';
@@ -14,15 +15,14 @@ import {
 	AuthorFliterDialog,
 	ImageQualityDialog,
 } from '../components/Dialogs';
-import {useVersionName} from '../utils/hooks';
 import {getAppSetting, storageAppSetting} from '../common/storage';
-
 import {useTagsValue} from '../utils/tags';
+
 import type {AppSettings} from '../common/types';
 
 const defaultSettings = {
 	r18: 0,
-	proxy: '',
+	proxy: 'i.pixiv.re',
 	quality: 1,
 	uid: new Set(),
 	tag: new Set(),
@@ -31,9 +31,10 @@ const defaultSettings = {
 
 export default function SettingsPage() {
 	const tags = useTagsValue();
-	const versionName = useVersionName();
 	const [dialog, setDialog] = React.useState(0);
 	const [settings, setSettings] = React.useState<AppSettings>();
+
+	const versionName = nativeApplicationVersion || '1.0.0';
 
 	const handleSelectTag = (v: string) => {
 		setSettings((pre) => {

@@ -1,9 +1,7 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {useRecoilState} from 'recoil';
 import {
-	Platform,
 	Dimensions,
-	NativeModules,
 	NativeScrollEvent,
 	NativeSyntheticEvent,
 } from 'react-native';
@@ -16,26 +14,6 @@ export function useToast() {
 	return function toast(text: string) {
 		setToast({open: true, text});
 	};
-}
-
-// 通过原生模组获取 VersionName(Android only)
-export function useVersionName() {
-	const [versionName, setVersionName] = useState('1.0.0');
-
-	useEffect(() => {
-		if (Platform.OS === 'android') {
-			const {VersionModule} = NativeModules;
-			VersionModule.getVersionName((e: any, v: string) => {
-				if (e) {
-					console.error(e);
-				} else {
-					setVersionName(v);
-				}
-			});
-		}
-	}, []);
-
-	return versionName;
 }
 
 // 轮播图组件的下标钩子
