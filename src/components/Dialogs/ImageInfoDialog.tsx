@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
 	list: {
 		marginBottom: 16,
 		minHeight: 64,
-		maxHeight: 128,
+		maxHeight: 164,
 	},
 	listContent: {
 		justifyContent: 'center',

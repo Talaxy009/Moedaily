@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
 	box: {
 		marginBottom: 16,
 		minHeight: 64,
-		maxHeight: 128,
+		maxHeight: 164,
 	},
 	boxContent: {
 		justifyContent: 'center',
