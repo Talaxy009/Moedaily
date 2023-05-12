@@ -21,11 +21,11 @@ export type ImageData = {
 
 export type ImageDataList = Array<ImageData>;
 
-export type AppSettings = {
+export type ApiSettings = {
 	r18: 0 | 1 | 2; // 一次返回的结果数量，范围为 1 到 20
 	quality: 0 | 1 | 2; // original regular small
 	uid: Set<string>; // 返回指定 uid 作者的作品，最多 20 个
 	tag: Set<string>; // 返回匹配指定标签的作品
 	excludeAI: boolean; // 排除 AI 作品
-	proxy: string; // 设置图片地址所使用的在线反代服务
+	proxy: string; // 设置图片地址所使用的反代服务
 };

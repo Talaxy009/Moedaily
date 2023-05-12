@@ -8,29 +8,46 @@ import {
 	TextInput,
 	Caption,
 } from 'react-native-paper';
+import {useRecoilState} from 'recoil';
 import {StyleSheet, Vibration, ScrollView} from 'react-native';
+
 import {getUIDs, storageUIDs} from '../../common/storage';
+import {apiSettingsState} from '../../common/atoms';
 import {useToast} from '../../utils/hooks';
 import strings from './strings';
 
 interface DialogProps {
 	onClose: () => void;
-	onSelect: (tag: string) => void;
 	visible: boolean;
-	selected: Set<string>;
 }
 
 export default function AuthorFliterDialog({
 	onClose,
-	onSelect,
-	selected,
 	visible = false,
 }: DialogProps) {
+	const [settings, setSettings] = useRecoilState(apiSettingsState);
 	const [uids, setUIDs] = React.useState<Set<string>>();
 	const [delUID, setDelUID] = React.useState('');
 	const [newUID, setNewUID] = React.useState('');
 	const inputRef = React.useRef<any>(null);
 	const toast = useToast();
+
+	const selected = settings?.uid || new Set();
+
+	const handleSelectUID = (v: string) => {
+		setSettings((pre) => {
+			if (!pre) {
+				return null;
+			}
+			const uid = pre.uid;
+			if (uid.has(v)) {
+				uid.delete(v);
+			} else {
+				uid.add(v);
+			}
+			return {...pre, uid};
+		});
+	};
 
 	const handleAddUID = () => {
 		if (newUID && uids) {
@@ -52,14 +69,14 @@ export default function AuthorFliterDialog({
 			setDelUID('');
 			storageUIDs(tmp);
 			if (selected.has(delUID)) {
-				onSelect(delUID);
+				handleSelectUID(delUID);
 			}
 		}
 	};
 
 	const handleSelect = (value: string) => {
 		if (selected.size < 20) {
-			onSelect(value);
+			handleSelectUID(value);
 		} else {
 			toast(strings.moreThanTwenty);
 		}
@@ -120,10 +137,11 @@ export default function AuthorFliterDialog({
 						<TextInput
 							dense
 							ref={inputRef}
-							label={strings.addAuthor}
+							defaultValue={newUID}
 							keyboardType="numeric"
 							textContentType="none"
 							onChangeText={setNewUID}
+							label={strings.addAuthor}
 							right={
 								<TextInput.Icon
 									icon="plus-circle-outline"

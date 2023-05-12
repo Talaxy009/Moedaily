@@ -1,35 +1,42 @@
 import React from 'react';
+import {useRecoilState} from 'recoil';
 import {View, TouchableNativeFeedback, StyleSheet} from 'react-native';
 import {Title, Portal, Button, Dialog, RadioButton} from 'react-native-paper';
 
+import {apiSettingsState} from '../../common/atoms';
 import strings from './strings';
 
 interface DialogProps {
 	onClose: () => void;
-	onSelect: (r18: number) => void;
 	visible: boolean;
-	r18: 0 | 1 | 2;
 }
 
-export default function R18Dialog({
-	visible = false,
-	onSelect,
-	onClose,
-	r18,
-}: DialogProps) {
+export default function R18Dialog({visible = false, onClose}: DialogProps) {
+	const [settings, setSettings] = useRecoilState(apiSettingsState);
+
+	const handleSelectR18 = (r: number) => {
+		setSettings((pre) => {
+			if (!pre) {
+				return null;
+			}
+			const r18 = r as 0 | 1 | 2;
+			return {...pre, r18};
+		});
+	};
+
 	return (
 		<Portal>
 			<Dialog visible={visible} onDismiss={onClose}>
 				<Dialog.Title>{strings.r18}</Dialog.Title>
 				<Dialog.Content>
 					<RadioButton.Group
-						value={r18.toString()}
-						onValueChange={(v) => onSelect(Number(v))}
+						value={settings?.r18.toString() || '0'}
+						onValueChange={(v) => handleSelectR18(Number(v))}
 					>
 						{strings.r18Selections.map((v, i) => (
 							<View key={i} style={styles.box}>
 								<TouchableNativeFeedback
-									onPress={() => onSelect(i)}
+									onPress={() => handleSelectR18(i)}
 								>
 									<View style={styles.bar}>
 										<Title style={styles.text}>{v}</Title>

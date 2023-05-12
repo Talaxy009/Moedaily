@@ -1,9 +1,11 @@
-import {getAppSetting} from '../common/storage';
-import {AppSettings} from '../common/types';
+import {nativeApplicationVersion} from 'expo-application';
+
+import {getApiSetting} from '../common/storage';
+import {ApiSettings} from '../common/types';
 
 const quality = ['original', 'regular', 'small'];
 
-const getAPIParameter = (origin: AppSettings | null) => {
+const getAPIParameter = (origin: ApiSettings | null) => {
 	if (origin) {
 		return {
 			size: ['mini', quality[origin.quality]],
@@ -25,12 +27,13 @@ const getAPIParameter = (origin: AppSettings | null) => {
 };
 
 export async function getImage() {
-	const settings = await getAppSetting();
+	const settings = await getApiSetting();
 	const p = getAPIParameter(settings);
 
 	const res = await fetch('https://api.lolicon.app/setu/v2/', {
 		method: 'POST',
 		headers: {
+			'User-Agent': `Moedaily/${nativeApplicationVersion}`,
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify(p),

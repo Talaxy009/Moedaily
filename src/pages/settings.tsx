@@ -1,6 +1,6 @@
 import React from 'react';
 import {ScrollView} from 'react-native';
-import {List, Switch} from 'react-native-paper';
+import {List} from 'react-native-paper';
 import LocalizedStrings from 'react-native-localization';
 import {nativeApplicationVersion} from 'expo-application';
 
@@ -15,10 +15,13 @@ import {
 	AuthorFliterDialog,
 	ImageQualityDialog,
 } from '../components/Dialogs';
-import {getAppSetting, storageAppSetting} from '../common/storage';
+import {getApiSetting, storageApiSetting} from '../common/storage';
 import {useTagsValue} from '../utils/tags';
 
-import type {AppSettings} from '../common/types';
+import type {ApiSettings} from '../common/types';
+import {useRecoilState} from 'recoil';
+import {apiSettingsState} from '../common/atoms';
+import AiSwitch from '../components/Switch/AiSwitch';
 
 const defaultSettings = {
 	r18: 0,
@@ -27,96 +30,30 @@ const defaultSettings = {
 	uid: new Set(),
 	tag: new Set(),
 	excludeAI: false,
-} as AppSettings;
+} as ApiSettings;
 
 export default function SettingsPage() {
 	const tags = useTagsValue();
 	const [dialog, setDialog] = React.useState(0);
-	const [settings, setSettings] = React.useState<AppSettings>();
+	const [settings, setSettings] = useRecoilState(apiSettingsState);
 
 	const versionName = nativeApplicationVersion || '1.0.0';
-
-	const handleSelectTag = (v: string) => {
-		setSettings((pre) => {
-			if (!pre) {
-				return;
-			}
-			const tag = pre.tag;
-			if (tag.has(v)) {
-				tag.delete(v);
-			} else {
-				tag.add(v);
-			}
-			return {...pre, tag};
-		});
-	};
-
-	const handleSelectUID = (v: string) => {
-		setSettings((pre) => {
-			if (!pre) {
-				return;
-			}
-			const uid = pre.uid;
-			if (uid.has(v)) {
-				uid.delete(v);
-			} else {
-				uid.add(v);
-			}
-			return {...pre, uid};
-		});
-	};
-
-	const handleSelectR18 = (r: number) => {
-		setSettings((pre) => {
-			if (!pre) {
-				return;
-			}
-			const r18 = r as 0 | 1 | 2;
-			return {...pre, r18};
-		});
-	};
-
-	const handleSelectQuality = (q: number) => {
-		setSettings((pre) => {
-			if (!pre) {
-				return;
-			}
-			const quality = q as 0 | 1 | 2;
-			return {...pre, quality};
-		});
-	};
-
-	const handleSwitchAI = () =>
-		setSettings((pre) => {
-			if (pre) {
-				return {...pre, excludeAI: !pre.excludeAI};
-			}
-			return;
-		});
-
-	const handelChangeProxy = (p: string) =>
-		setSettings((pre) => {
-			if (pre) {
-				return {...pre, proxy: p};
-			}
-			return;
-		});
 
 	const handleReset = () => {
 		const newSetting = {
 			...defaultSettings,
 			quality: settings?.quality || 1,
 			proxy: settings?.proxy || '',
-		} as AppSettings;
+		} as ApiSettings;
 		setSettings(newSetting);
-		storageAppSetting(newSetting);
+		storageApiSetting(newSetting);
 	};
 
 	const handleCloseDialog = () => setDialog(0);
 
 	React.useEffect(() => {
 		if (!settings) {
-			getAppSetting().then((v) => {
+			getApiSetting().then((v) => {
 				if (v) {
 					setSettings(v);
 				} else {
@@ -124,9 +61,9 @@ export default function SettingsPage() {
 				}
 			});
 		} else {
-			storageAppSetting(settings);
+			storageApiSetting(settings);
 		}
-	}, [settings]);
+	}, [settings, setSettings]);
 
 	return (
 		<Layout>
@@ -153,13 +90,7 @@ export default function SettingsPage() {
 					<List.Item
 						title={strings.filter.ai}
 						left={Icon.BrushOffIcon}
-						right={(p) => (
-							<Switch
-								{...p}
-								onChange={handleSwitchAI}
-								value={settings?.excludeAI || false}
-							/>
-						)}
+						right={AiSwitch}
 					/>
 					<List.Item
 						title={strings.filter.reset}
@@ -213,32 +144,19 @@ export default function SettingsPage() {
 			<TagsFliterDialog
 				visible={dialog === 1}
 				onClose={handleCloseDialog}
-				onSelect={handleSelectTag}
-				selected={settings?.tag || new Set()}
 			/>
 			<AuthorFliterDialog
 				visible={dialog === 2}
 				onClose={handleCloseDialog}
-				onSelect={handleSelectUID}
-				selected={settings?.uid || new Set()}
 			/>
-			<R18Dialog
-				visible={dialog === 3}
-				r18={settings?.r18 || 0}
-				onSelect={handleSelectR18}
-				onClose={handleCloseDialog}
-			/>
+			<R18Dialog visible={dialog === 3} onClose={handleCloseDialog} />
 			<ImageQualityDialog
 				visible={dialog === 4}
 				onClose={handleCloseDialog}
-				onSelect={handleSelectQuality}
-				quality={settings?.quality || 1}
 			/>
 			<ProxyServerDialog
 				visible={dialog === 5}
 				onClose={handleCloseDialog}
-				onChange={handelChangeProxy}
-				value={settings?.proxy || ''}
 			/>
 			<OpenLinkDialog
 				visible={dialog === 6}

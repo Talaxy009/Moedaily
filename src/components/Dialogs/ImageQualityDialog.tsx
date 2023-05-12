@@ -8,35 +8,45 @@ import {
 	Dialog,
 	RadioButton,
 } from 'react-native-paper';
+import {useRecoilState} from 'recoil';
 
+import {apiSettingsState} from '../../common/atoms';
 import strings from './strings';
 
 interface DialogProps {
 	onClose: () => void;
-	onSelect: (quality: number) => void;
 	visible: boolean;
-	quality: 0 | 1 | 2;
 }
 
 export default function ImageQualityDialog({
 	visible = false,
-	onSelect,
 	onClose,
-	quality,
 }: DialogProps) {
+	const [settings, setSettings] = useRecoilState(apiSettingsState);
+
+	const handleSelectQuality = (q: number) => {
+		setSettings((pre) => {
+			if (!pre) {
+				return null;
+			}
+			const quality = q as 0 | 1 | 2;
+			return {...pre, quality};
+		});
+	};
+
 	return (
 		<Portal>
 			<Dialog visible={visible} onDismiss={onClose}>
 				<Dialog.Title>{strings.imgQuality}</Dialog.Title>
 				<Dialog.Content>
 					<RadioButton.Group
-						value={quality.toString()}
-						onValueChange={(v) => onSelect(Number(v))}
+						value={settings?.quality.toString() || '1'}
+						onValueChange={(v) => handleSelectQuality(Number(v))}
 					>
 						{strings.qualitySelections.map((v, i) => (
 							<View key={i} style={styles.box}>
 								<TouchableNativeFeedback
-									onPress={() => onSelect(i)}
+									onPress={() => handleSelectQuality(i)}
 								>
 									<View style={styles.bar}>
 										<View style={styles.textArea}>

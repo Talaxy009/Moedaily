@@ -1,8 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import type {AppSettings} from './types';
+import type {ApiSettings} from './types';
 
-export async function getAppSetting(): Promise<AppSettings | null> {
+// API settings
+
+export async function getApiSetting(): Promise<ApiSettings | null> {
 	const value = await AsyncStorage.getItem('@APP_SETTINGS');
 	if (value) {
 		const tmp = JSON.parse(value);
@@ -15,7 +17,7 @@ export async function getAppSetting(): Promise<AppSettings | null> {
 	return null;
 }
 
-export function storageAppSetting(settings: AppSettings) {
+export function storageApiSetting(settings: ApiSettings) {
 	const tmp = {
 		...settings,
 		tag: Array.from(settings.tag),
@@ -24,6 +26,8 @@ export function storageAppSetting(settings: AppSettings) {
 	const jsonValue = JSON.stringify(tmp);
 	return AsyncStorage.setItem('@APP_SETTINGS', jsonValue);
 }
+
+// Added tag list
 
 export async function getTags(): Promise<Set<string> | null> {
 	const value = await AsyncStorage.getItem('@TAGS');
@@ -35,6 +39,8 @@ export function storageTags(tags: Set<string>) {
 	return AsyncStorage.setItem('@TAGS', jsonValue);
 }
 
+// Added UID list
+
 export async function getUIDs(): Promise<Set<string> | null> {
 	const value = await AsyncStorage.getItem('@UIDS');
 	return value ? new Set(JSON.parse(value)) : null;
@@ -45,10 +51,22 @@ export function storageUIDs(uids: Set<string>) {
 	return AsyncStorage.setItem('@UIDS', jsonValue);
 }
 
+// APP initialization state (for usage guide)
+
 export async function getInitState(): Promise<string | null> {
 	return AsyncStorage.getItem('@INIT_STATE');
 }
 
 export function storageInitState() {
 	return AsyncStorage.setItem('@INIT_STATE', 'true');
+}
+
+// Custom proxy storage
+
+export async function getCustomProxy(): Promise<string | null> {
+	return AsyncStorage.getItem('@SELF_PROXY');
+}
+
+export function storageCustomProxy(proxy: string) {
+	return AsyncStorage.setItem('@SELF_PROXY', proxy);
 }

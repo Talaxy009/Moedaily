@@ -8,30 +8,46 @@ import {
 	Caption,
 	TextInput,
 } from 'react-native-paper';
+import {useRecoilState} from 'recoil';
 import {ScrollView, StyleSheet, Vibration} from 'react-native';
 
+import {apiSettingsState} from '../../common/atoms';
 import {useToast} from '../../utils/hooks';
 import {useTags} from '../../utils/tags';
 import strings from './strings';
 
 interface DialogProps {
 	onClose: () => void;
-	onSelect: (tag: string) => void;
 	visible: boolean;
-	selected: Set<string>;
 }
 
 export default function TagsFliterDialog({
 	onClose,
-	onSelect,
-	selected,
 	visible = false,
 }: DialogProps) {
 	const inputRef = React.useRef<any>(null);
 	const [tags, {addTags, delTags}] = useTags();
 	const [delTag, setDelTag] = React.useState('');
 	const [newTag, setNewTag] = React.useState('');
+	const [settings, setSettings] = useRecoilState(apiSettingsState);
 	const toast = useToast();
+
+	const selected = settings?.tag || new Set();
+
+	const handleSelectTag = (v: string) => {
+		setSettings((pre) => {
+			if (!pre) {
+				return null;
+			}
+			const tag = pre.tag;
+			if (tag.has(v)) {
+				tag.delete(v);
+			} else {
+				tag.add(v);
+			}
+			return {...pre, tag};
+		});
+	};
 
 	const handleAddTag = () => {
 		if (newTag) {
@@ -46,7 +62,7 @@ export default function TagsFliterDialog({
 		if (delTag) {
 			delTags(delTag);
 			if (selected.has(delTag)) {
-				onSelect(delTag);
+				handleSelectTag(delTag);
 			}
 			setDelTag('');
 		}
@@ -54,7 +70,7 @@ export default function TagsFliterDialog({
 
 	const handleSelect = (value: string) => {
 		if (selected.size < 20) {
-			onSelect(value);
+			handleSelectTag(value);
 		} else {
 			toast(strings.moreThanTwenty);
 		}
@@ -105,6 +121,7 @@ export default function TagsFliterDialog({
 						<TextInput
 							dense
 							ref={inputRef}
+							defaultValue={newTag}
 							label={strings.addTag}
 							onChangeText={setNewTag}
 							right={
