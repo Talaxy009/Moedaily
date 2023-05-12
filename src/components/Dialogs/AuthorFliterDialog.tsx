@@ -29,6 +29,7 @@ export default function AuthorFliterDialog({
 	const [uids, setUIDs] = React.useState<Set<string>>();
 	const [delUID, setDelUID] = React.useState('');
 	const [newUID, setNewUID] = React.useState('');
+	const inputRef = React.useRef<any>(null);
 	const toast = useToast();
 
 	const handleAddUID = () => {
@@ -37,6 +38,7 @@ export default function AuthorFliterDialog({
 			tmp.add(newUID);
 			setUIDs(tmp);
 			setNewUID('');
+			inputRef.current?.clear();
 			storageUIDs(tmp);
 			toast(strings.addUIDsucc);
 		}
@@ -117,11 +119,11 @@ export default function AuthorFliterDialog({
 					) : (
 						<TextInput
 							dense
-							value={newUID}
+							ref={inputRef}
 							label={strings.addAuthor}
 							keyboardType="numeric"
 							textContentType="none"
-							onChangeText={(text) => setNewUID(text)}
+							onChangeText={setNewUID}
 							right={
 								<TextInput.Icon
 									icon="plus-circle-outline"

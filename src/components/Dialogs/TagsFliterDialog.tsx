@@ -27,6 +27,7 @@ export default function TagsFliterDialog({
 	selected,
 	visible = false,
 }: DialogProps) {
+	const inputRef = React.useRef<any>(null);
 	const [tags, {addTags, delTags}] = useTags();
 	const [delTag, setDelTag] = React.useState('');
 	const [newTag, setNewTag] = React.useState('');
@@ -37,6 +38,7 @@ export default function TagsFliterDialog({
 			addTags(newTag);
 			setNewTag('');
 			toast(strings.addTagSucc);
+			inputRef.current?.clear();
 		}
 	};
 
@@ -102,9 +104,9 @@ export default function TagsFliterDialog({
 					) : (
 						<TextInput
 							dense
+							ref={inputRef}
 							label={strings.addTag}
-							value={newTag}
-							onChangeText={(text) => setNewTag(text)}
+							onChangeText={setNewTag}
 							right={
 								<TextInput.Icon
 									icon="plus-circle-outline"
