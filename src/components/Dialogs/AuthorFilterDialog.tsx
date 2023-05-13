@@ -5,95 +5,111 @@ import {
 	Portal,
 	Dialog,
 	Button,
-	Caption,
 	TextInput,
+	Caption,
 } from 'react-native-paper';
 import {useRecoilState} from 'recoil';
-import {ScrollView, Vibration} from 'react-native';
+import {Vibration, ScrollView} from 'react-native';
 
+import {getUIDs, storageUIDs} from '../../common/storage';
 import {apiSettingsState} from '../../common/atoms';
 import {useToast} from '../../utils/hooks';
-import {useTags} from '../../utils/tags';
 import strings from './strings';
 import styles from './styles';
 
 import type {DialogProps} from '../../common/types';
 
-export default function TagsFliterDialog({
+export default function AuthorFilterDialog({
 	onClose,
 	visible = false,
 }: DialogProps) {
-	const inputRef = React.useRef<any>(null);
-	const [tags, {addTags, delTags}] = useTags();
-	const [delTag, setDelTag] = React.useState('');
-	const [newTag, setNewTag] = React.useState('');
 	const [settings, setSettings] = useRecoilState(apiSettingsState);
+	const [uids, setUIDs] = React.useState<Set<string>>();
+	const [delUID, setDelUID] = React.useState('');
+	const [newUID, setNewUID] = React.useState('');
+	const inputRef = React.useRef<any>(null);
 	const toast = useToast();
 
-	const selected = settings?.tag || new Set();
+	const selected = settings?.uid || new Set();
 
-	const handleSelectTag = (v: string) => {
+	const handleSelectUID = (v: string) => {
 		setSettings((pre) => {
 			if (!pre) {
 				return null;
 			}
-			const tag = pre.tag;
-			if (tag.has(v)) {
-				tag.delete(v);
+			const uid = pre.uid;
+			if (uid.has(v)) {
+				uid.delete(v);
 			} else {
-				tag.add(v);
+				uid.add(v);
 			}
-			return {...pre, tag};
+			return {...pre, uid};
 		});
 	};
 
-	const handleAddTag = () => {
-		if (newTag) {
-			addTags(newTag);
-			setNewTag('');
-			toast(strings.addTagSucc);
+	const handleAddUID = () => {
+		if (newUID && uids) {
+			const tmp = uids;
+			tmp.add(newUID);
+			setUIDs(tmp);
+			setNewUID('');
 			inputRef.current?.clear();
+			storageUIDs(tmp);
+			toast(strings.addUIDsucc);
 		}
 	};
 
-	const handleDelTag = () => {
-		if (delTag) {
-			delTags(delTag);
-			if (selected.has(delTag)) {
-				handleSelectTag(delTag);
+	const handleDelUID = () => {
+		if (delUID && uids) {
+			const tmp = uids;
+			tmp.delete(delUID);
+			setUIDs(tmp);
+			setDelUID('');
+			storageUIDs(tmp);
+			if (selected.has(delUID)) {
+				handleSelectUID(delUID);
 			}
-			setDelTag('');
 		}
 	};
 
 	const handleSelect = (value: string) => {
 		if (selected.size < 20) {
-			handleSelectTag(value);
+			handleSelectUID(value);
 		} else {
 			toast(strings.moreThanTwenty);
 		}
 	};
 
 	const handleDelete = (value: string) => {
-		if (!delTag) {
+		if (!delUID) {
 			Vibration.vibrate([0, 10, 0]);
-			setDelTag(value);
+			setDelUID(value);
 		}
 	};
+
+	React.useEffect(() => {
+		getUIDs().then((v) => {
+			if (v) {
+				setUIDs(v);
+			} else {
+				setUIDs(new Set());
+			}
+		});
+	}, []);
 
 	return (
 		<Portal>
 			<Dialog visible={visible} onDismiss={onClose}>
 				<Dialog.Title>
-					{strings.tagsFliter} ({selected.size}/20)
+					{strings.authorFilter} ({selected.size}/20)
 				</Dialog.Title>
 				<Dialog.Content>
 					<ScrollView
 						style={styles.box}
 						contentContainerStyle={styles.boxContent}
 					>
-						{tags && tags.size > 0 ? (
-							Array.from(tags).map((v, i) => (
+						{uids && uids.size > 0 ? (
+							Array.from(uids).map((v, i) => (
 								<Chip
 									key={i}
 									style={styles.chip}
@@ -107,37 +123,39 @@ export default function TagsFliterDialog({
 							))
 						) : (
 							<Caption style={styles.caption}>
-								{strings.noTag}
+								{strings.noUID}
 							</Caption>
 						)}
 					</ScrollView>
-					{delTag ? (
+					{delUID ? (
 						<Text style={styles.delText} variant="bodyLarge">
-							{strings.delete}: {delTag} ?
+							{strings.delete}: {delUID}?
 						</Text>
 					) : (
 						<TextInput
 							dense
 							ref={inputRef}
-							defaultValue={newTag}
-							label={strings.addTag}
-							onChangeText={setNewTag}
+							defaultValue={newUID}
+							keyboardType="numeric"
+							textContentType="none"
+							onChangeText={setNewUID}
+							label={strings.addAuthor}
 							right={
 								<TextInput.Icon
 									icon="plus-circle-outline"
-									onPress={handleAddTag}
+									onPress={handleAddUID}
 								/>
 							}
 						/>
 					)}
 				</Dialog.Content>
 				<Dialog.Actions>
-					{delTag && (
-						<Button onPress={() => setDelTag('')}>
+					{delUID && (
+						<Button onPress={() => setDelUID('')}>
 							{strings.cancel}
 						</Button>
 					)}
-					<Button onPress={delTag ? handleDelTag : onClose}>
+					<Button onPress={delUID ? handleDelUID : onClose}>
 						{strings.confirm}
 					</Button>
 				</Dialog.Actions>

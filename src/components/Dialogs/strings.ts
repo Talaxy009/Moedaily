@@ -2,8 +2,8 @@ import LocalizedStrings from 'react-native-localization';
 
 export default new LocalizedStrings({
 	en: {
-		// AuthorFliterDialog
-		authorFliter: 'Author Fliter',
+		// AuthorFilterDialog
+		authorFilter: 'Author Filter',
 		delete: 'Delete',
 		addAuthor: "Add Author's UID",
 		addUIDsucc: 'UID added successfully',
@@ -28,6 +28,7 @@ export default new LocalizedStrings({
 		],
 		// OpenLinkDialog
 		visitLink: 'Visit Link',
+		visitConfirm: 'Visit link',
 		// R18Dialog
 		r18: 'R18',
 		r18Selections: ['No R18', 'Only R18', 'Allow R18'],
@@ -51,8 +52,8 @@ export default new LocalizedStrings({
 		resetFilter: 'Reset Filter',
 		resetConfirm:
 			'Reset all filters? (your saved tags and authors will be safe)',
-		// TagsFliterDialog
-		tagsFliter: 'Tags Fliter',
+		// TagsFilterDialog
+		tagsFilter: 'Tags Filter',
 		addTag: 'Add Tag',
 		addTagSucc: 'Tag added successfully',
 		noTag: 'No tag, please add below',
@@ -62,8 +63,8 @@ export default new LocalizedStrings({
 		close: 'Close',
 	},
 	zh: {
-		// AuthorFliterDialog
-		authorFliter: '画师筛选',
+		// AuthorFilterDialog
+		authorFilter: '画师筛选',
 		delete: '删除',
 		addAuthor: '添加画师 UID',
 		addUIDsucc: '成功添加 UID',
@@ -91,6 +92,7 @@ export default new LocalizedStrings({
 		r18Selections: ['禁止 R18', '只要 R18', '允许 R18'],
 		// OpenLinkDialog
 		visitLink: '访问链接',
+		visitConfirm: '要访问链接',
 		// ProxyServerDialog
 		proxySetting: '反代配置',
 		proxy: [
@@ -105,8 +107,8 @@ export default new LocalizedStrings({
 		// ResetDialog
 		resetFilter: '重置筛选配置',
 		resetConfirm: '重置所有筛选配置？（已保存的标签和画师不会被删除）',
-		// TagsFliterDialog
-		tagsFliter: '标签筛选',
+		// TagsFilterDialog
+		tagsFilter: '标签筛选',
 		addTag: '添加标签',
 		addTagSucc: '成功添加标签',
 		noTag: '无标签，请在下方添加',

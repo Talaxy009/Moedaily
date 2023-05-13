@@ -10,10 +10,10 @@ import * as Icon from '../components/ListIcons';
 import Layout from '../components/Layout';
 import {
 	R18Dialog,
-	TagsFliterDialog,
+	TagsFilterDialog,
 	ProxyServerDialog,
 	ResetFilterDialog,
-	AuthorFliterDialog,
+	AuthorFilterDialog,
 	ImageQualityDialog,
 	createOpenLinkDialog,
 } from '../components/Dialogs';
@@ -40,8 +40,8 @@ const AuthorLinkDialog = createOpenLinkDialog('https://www.talaxy.site/');
 const APILinkDialog = createOpenLinkDialog('https://api.lolicon.app/#/setu');
 
 const dialogs = [
-	{key: 'TagsFliterDialog', component: TagsFliterDialog},
-	{key: 'AuthorFliterDialog', component: AuthorFliterDialog},
+	{key: 'TagsFilterDialog', component: TagsFilterDialog},
+	{key: 'AuthorFilterDialog', component: AuthorFilterDialog},
 	{key: 'R18Dialog', component: R18Dialog},
 	{key: 'ResetFilterDialog', component: ResetFilterDialog},
 	{key: 'ImageQualityDialog', component: ImageQualityDialog},
@@ -82,12 +82,12 @@ export default function SettingsPage() {
 					<List.Item
 						title={strings.filter.tag}
 						left={Icon.TagIcon}
-						onPress={() => setDialog('TagsFliterDialog')}
+						onPress={() => setDialog('TagsFilterDialog')}
 					/>
 					<List.Item
 						title={strings.filter.author}
 						left={Icon.AccFilterIcon}
-						onPress={() => setDialog('AuthorFliterDialog')}
+						onPress={() => setDialog('AuthorFilterDialog')}
 					/>
 					{tags.has('R-18') && (
 						<List.Item
@@ -166,10 +166,10 @@ const strings = new LocalizedStrings({
 		filter: {
 			title: 'Filter Settings',
 			tag: 'Tags Filter',
-			author: 'Authors Fliter',
+			author: 'Authors Filter',
 			r18: 'R18',
 			ai: 'Exclude AI works',
-			reset: 'Reset All Fliters',
+			reset: 'Reset All Filters',
 		},
 		image: {
 			title: 'Image Setting',

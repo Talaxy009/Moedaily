@@ -26,7 +26,7 @@ export default function OpenLinkDialog({
 				<Dialog.Title>{strings.visitLink}</Dialog.Title>
 				<Dialog.Content>
 					<Text>
-						{strings.visitLink}: {url} ?
+						{strings.visitConfirm}: {url} ?
 					</Text>
 				</Dialog.Content>
 				<Dialog.Actions>
