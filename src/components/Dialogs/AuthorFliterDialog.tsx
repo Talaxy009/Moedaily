@@ -9,17 +9,15 @@ import {
 	Caption,
 } from 'react-native-paper';
 import {useRecoilState} from 'recoil';
-import {StyleSheet, Vibration, ScrollView} from 'react-native';
+import {Vibration, ScrollView} from 'react-native';
 
 import {getUIDs, storageUIDs} from '../../common/storage';
 import {apiSettingsState} from '../../common/atoms';
 import {useToast} from '../../utils/hooks';
 import strings from './strings';
+import styles from './styles';
 
-interface DialogProps {
-	onClose: () => void;
-	visible: boolean;
-}
+import type {DialogProps} from '../../common/types';
 
 export default function AuthorFliterDialog({
 	onClose,
@@ -165,26 +163,3 @@ export default function AuthorFliterDialog({
 		</Portal>
 	);
 }
-
-const styles = StyleSheet.create({
-	box: {
-		marginBottom: 16,
-		minHeight: 64,
-		maxHeight: 164,
-	},
-	boxContent: {
-		justifyContent: 'center',
-		flexDirection: 'row',
-		flexWrap: 'wrap',
-	},
-	caption: {
-		alignSelf: 'center',
-	},
-	chip: {
-		margin: 4,
-	},
-	delText: {
-		color: 'red',
-		alignSelf: 'center',
-	},
-});

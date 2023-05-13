@@ -47,6 +47,10 @@ export default new LocalizedStrings({
 			{value: 'i.pixiv.nl', description: 'Ditto, as a backup'},
 		],
 		manual: 'Manual configuration',
+		// ResetDialog
+		resetFilter: 'Reset Filter',
+		resetConfirm:
+			'Reset all filters? (your saved tags and authors will be safe)',
 		// TagsFliterDialog
 		tagsFliter: 'Tags Fliter',
 		addTag: 'Add Tag',
@@ -98,6 +102,9 @@ export default new LocalizedStrings({
 			{value: 'i.pixiv.nl', description: '同上，作为备用'},
 		],
 		manual: '手动配置',
+		// ResetDialog
+		resetFilter: '重置筛选配置',
+		resetConfirm: '重置所有筛选配置？（已保存的标签和画师不会被删除）',
 		// TagsFliterDialog
 		tagsFliter: '标签筛选',
 		addTag: '添加标签',

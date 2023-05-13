@@ -1,12 +1,13 @@
 import React from 'react';
 import Clipboard from '@react-native-community/clipboard';
-import {Linking, ScrollView, StyleSheet} from 'react-native';
+import {Linking, ScrollView} from 'react-native';
 import {Button, Dialog, Portal, List, Chip} from 'react-native-paper';
 
 import {ClockIcon, AccIcon, TagIcon} from '../ListIcons';
 import {useTagsAction} from '../../utils/tags';
 import {useToast} from '../../utils/hooks';
 import strings from './strings';
+import styles from './styles';
 
 import type {ImageData} from '../../common/types';
 
@@ -142,19 +143,3 @@ export default function ImageInfoDialog({
 		</Portal>
 	);
 }
-
-const styles = StyleSheet.create({
-	list: {
-		marginBottom: 16,
-		minHeight: 64,
-		maxHeight: 164,
-	},
-	listContent: {
-		justifyContent: 'center',
-		flexDirection: 'row',
-		flexWrap: 'wrap',
-	},
-	chip: {
-		margin: 4,
-	},
-});

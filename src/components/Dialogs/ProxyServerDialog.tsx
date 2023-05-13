@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, TouchableNativeFeedback} from 'react-native';
+import {View, TouchableNativeFeedback} from 'react-native';
 import {
 	Text,
 	Title,
@@ -14,11 +14,9 @@ import {useRecoilState} from 'recoil';
 import {getCustomProxy, storageCustomProxy} from '../../common/storage';
 import {apiSettingsState} from '../../common/atoms';
 import strings from './strings';
+import styles from './styles';
 
-interface DialogProps {
-	onClose: () => void;
-	visible: boolean;
-}
+import type {DialogProps} from '../../common/types';
 
 export default function ProxyServerDialog({
 	onClose,
@@ -73,24 +71,25 @@ export default function ProxyServerDialog({
 						onValueChange={setSelected}
 					>
 						{strings.proxy.map((v, i) => (
-							<TouchableNativeFeedback
-								key={i}
-								onPress={() => setSelected(i.toString())}
-							>
-								<View style={styles.bar}>
-									<View>
-										<Title>{v.value}</Title>
-										<Text>{v.description}</Text>
+							<View key={i} style={styles.itemBox}>
+								<TouchableNativeFeedback
+									onPress={() => setSelected(i.toString())}
+								>
+									<View style={styles.bar}>
+										<View style={styles.textArea}>
+											<Title>{v.value}</Title>
+											<Text>{v.description}</Text>
+										</View>
+										<RadioButton value={i.toString()} />
 									</View>
-									<RadioButton value={i.toString()} />
-								</View>
-							</TouchableNativeFeedback>
+								</TouchableNativeFeedback>
+							</View>
 						))}
 						<View style={styles.bar}>
 							<TextInput
 								dense
 								defaultValue={proxy}
-								style={styles.input}
+								style={styles.inputBox}
 								textContentType="URL"
 								label={strings.manual}
 								onChangeText={setProxy}
@@ -107,15 +106,3 @@ export default function ProxyServerDialog({
 		</Portal>
 	);
 }
-
-const styles = StyleSheet.create({
-	bar: {
-		marginVertical: 4,
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'space-between',
-	},
-	input: {
-		width: '70%',
-	},
-});

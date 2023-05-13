@@ -1,4 +1,5 @@
 import React from 'react';
+import {useRecoilState} from 'recoil';
 import {ScrollView} from 'react-native';
 import {List} from 'react-native-paper';
 import LocalizedStrings from 'react-native-localization';
@@ -9,19 +10,19 @@ import * as Icon from '../components/ListIcons';
 import Layout from '../components/Layout';
 import {
 	R18Dialog,
-	OpenLinkDialog,
 	TagsFliterDialog,
 	ProxyServerDialog,
+	ResetFilterDialog,
 	AuthorFliterDialog,
 	ImageQualityDialog,
+	createOpenLinkDialog,
 } from '../components/Dialogs';
+import {AiSwitch} from '../components/Switchs/';
 import {getApiSetting, storageApiSetting} from '../common/storage';
+import {apiSettingsState} from '../common/atoms';
 import {useTagsValue} from '../utils/tags';
 
 import type {ApiSettings} from '../common/types';
-import {useRecoilState} from 'recoil';
-import {apiSettingsState} from '../common/atoms';
-import AiSwitch from '../components/Switch/AiSwitch';
 
 const defaultSettings = {
 	r18: 0,
@@ -32,24 +33,32 @@ const defaultSettings = {
 	excludeAI: false,
 } as ApiSettings;
 
+const APPLinkDialog = createOpenLinkDialog(
+	'https://github.com/Talaxy009/Moedaily',
+);
+const AuthorLinkDialog = createOpenLinkDialog('https://www.talaxy.site/');
+const APILinkDialog = createOpenLinkDialog('https://api.lolicon.app/#/setu');
+
+const dialogs = [
+	{key: 'TagsFliterDialog', component: TagsFliterDialog},
+	{key: 'AuthorFliterDialog', component: AuthorFliterDialog},
+	{key: 'R18Dialog', component: R18Dialog},
+	{key: 'ResetFilterDialog', component: ResetFilterDialog},
+	{key: 'ImageQualityDialog', component: ImageQualityDialog},
+	{key: 'ProxyServerDialog', component: ProxyServerDialog},
+	{key: 'APPLinkDialog', component: APPLinkDialog},
+	{key: 'AuthorLinkDialog', component: AuthorLinkDialog},
+	{key: 'APILinkDialog', component: APILinkDialog},
+];
+
 export default function SettingsPage() {
 	const tags = useTagsValue();
-	const [dialog, setDialog] = React.useState(0);
+	const [dialog, setDialog] = React.useState('');
 	const [settings, setSettings] = useRecoilState(apiSettingsState);
 
 	const versionName = nativeApplicationVersion || '1.0.0';
 
-	const handleReset = () => {
-		const newSetting = {
-			...defaultSettings,
-			quality: settings?.quality || 1,
-			proxy: settings?.proxy || '',
-		} as ApiSettings;
-		setSettings(newSetting);
-		storageApiSetting(newSetting);
-	};
-
-	const handleCloseDialog = () => setDialog(0);
+	const handleCloseDialog = () => setDialog('');
 
 	React.useEffect(() => {
 		if (!settings) {
@@ -73,18 +82,18 @@ export default function SettingsPage() {
 					<List.Item
 						title={strings.filter.tag}
 						left={Icon.TagIcon}
-						onPress={() => setDialog(1)}
+						onPress={() => setDialog('TagsFliterDialog')}
 					/>
 					<List.Item
 						title={strings.filter.author}
 						left={Icon.AccFilterIcon}
-						onPress={() => setDialog(2)}
+						onPress={() => setDialog('AuthorFliterDialog')}
 					/>
 					{tags.has('R-18') && (
 						<List.Item
 							title={strings.filter.r18}
 							left={Icon.RunIcon}
-							onPress={() => setDialog(3)}
+							onPress={() => setDialog('R18Dialog')}
 						/>
 					)}
 					<List.Item
@@ -94,7 +103,7 @@ export default function SettingsPage() {
 					/>
 					<List.Item
 						title={strings.filter.reset}
-						onPress={handleReset}
+						onPress={() => setDialog('ResetFilterDialog')}
 						left={Icon.ReloadIcon}
 					/>
 				</List.Section>
@@ -103,12 +112,12 @@ export default function SettingsPage() {
 					<List.Item
 						title={strings.image.quality}
 						left={Icon.ImgSizeIcon}
-						onPress={() => setDialog(4)}
+						onPress={() => setDialog('ImageQualityDialog')}
 					/>
 					<List.Item
 						title={strings.image.proxy}
 						left={Icon.LinkIcon}
-						onPress={() => setDialog(5)}
+						onPress={() => setDialog('ProxyServerDialog')}
 					/>
 				</List.Section>
 				{/* <List.Section>
@@ -124,55 +133,30 @@ export default function SettingsPage() {
 					<List.Item
 						left={Icon.InfoIcon}
 						description={versionName}
-						onPress={() => setDialog(6)}
+						onPress={() => setDialog('APPLinkDialog')}
 						title={strings.about.version}
 					/>
 					<List.Item
 						left={Icon.AccIcon}
 						description="Talaxy"
-						onPress={() => setDialog(7)}
+						onPress={() => setDialog('AuthorLinkDialog')}
 						title={strings.about.author}
 					/>
 					<List.Item
 						left={Icon.ServerIcon}
 						description="Lolicon API"
 						title={strings.about.api}
-						onPress={() => setDialog(8)}
+						onPress={() => setDialog('APILinkDialog')}
 					/>
 				</List.Section>
 			</ScrollView>
-			<TagsFliterDialog
-				visible={dialog === 1}
-				onClose={handleCloseDialog}
-			/>
-			<AuthorFliterDialog
-				visible={dialog === 2}
-				onClose={handleCloseDialog}
-			/>
-			<R18Dialog visible={dialog === 3} onClose={handleCloseDialog} />
-			<ImageQualityDialog
-				visible={dialog === 4}
-				onClose={handleCloseDialog}
-			/>
-			<ProxyServerDialog
-				visible={dialog === 5}
-				onClose={handleCloseDialog}
-			/>
-			<OpenLinkDialog
-				visible={dialog === 6}
-				onClose={handleCloseDialog}
-				url="https://github.com/Talaxy009/Moedaily"
-			/>
-			<OpenLinkDialog
-				visible={dialog === 7}
-				onClose={handleCloseDialog}
-				url="https://www.talaxy.site/"
-			/>
-			<OpenLinkDialog
-				visible={dialog === 8}
-				onClose={handleCloseDialog}
-				url="https://api.lolicon.app/#/setu"
-			/>
+			{dialogs.map((Dialog) => (
+				<Dialog.component
+					key={Dialog.key}
+					onClose={handleCloseDialog}
+					visible={dialog === Dialog.key}
+				/>
+			))}
 		</Layout>
 	);
 }
@@ -185,7 +169,7 @@ const strings = new LocalizedStrings({
 			author: 'Authors Fliter',
 			r18: 'R18',
 			ai: 'Exclude AI works',
-			reset: 'Reset Fliter',
+			reset: 'Reset All Fliters',
 		},
 		image: {
 			title: 'Image Setting',

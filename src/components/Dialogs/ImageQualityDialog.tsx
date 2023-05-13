@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TouchableNativeFeedback, StyleSheet} from 'react-native';
+import {View, TouchableNativeFeedback} from 'react-native';
 import {
 	Text,
 	Title,
@@ -12,11 +12,9 @@ import {useRecoilState} from 'recoil';
 
 import {apiSettingsState} from '../../common/atoms';
 import strings from './strings';
+import styles from './styles';
 
-interface DialogProps {
-	onClose: () => void;
-	visible: boolean;
-}
+import type {DialogProps} from '../../common/types';
 
 export default function ImageQualityDialog({
 	visible = false,
@@ -44,7 +42,7 @@ export default function ImageQualityDialog({
 						onValueChange={(v) => handleSelectQuality(Number(v))}
 					>
 						{strings.qualitySelections.map((v, i) => (
-							<View key={i} style={styles.box}>
+							<View key={i} style={styles.itemBox}>
 								<TouchableNativeFeedback
 									onPress={() => handleSelectQuality(i)}
 								>
@@ -67,20 +65,3 @@ export default function ImageQualityDialog({
 		</Portal>
 	);
 }
-
-const styles = StyleSheet.create({
-	box: {
-		borderRadius: 16,
-		marginVertical: 4,
-		overflow: 'hidden',
-	},
-	bar: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'space-between',
-	},
-	textArea: {
-		paddingHorizontal: 8,
-		paddingVertical: 4,
-	},
-});

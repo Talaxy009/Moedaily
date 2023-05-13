@@ -1,15 +1,13 @@
 import React from 'react';
 import {useRecoilState} from 'recoil';
-import {View, TouchableNativeFeedback, StyleSheet} from 'react-native';
+import {View, TouchableNativeFeedback} from 'react-native';
 import {Title, Portal, Button, Dialog, RadioButton} from 'react-native-paper';
 
 import {apiSettingsState} from '../../common/atoms';
 import strings from './strings';
+import styles from './styles';
 
-interface DialogProps {
-	onClose: () => void;
-	visible: boolean;
-}
+import type {DialogProps} from '../../common/types';
 
 export default function R18Dialog({visible = false, onClose}: DialogProps) {
 	const [settings, setSettings] = useRecoilState(apiSettingsState);
@@ -34,12 +32,14 @@ export default function R18Dialog({visible = false, onClose}: DialogProps) {
 						onValueChange={(v) => handleSelectR18(Number(v))}
 					>
 						{strings.r18Selections.map((v, i) => (
-							<View key={i} style={styles.box}>
+							<View key={i} style={styles.itemBox}>
 								<TouchableNativeFeedback
 									onPress={() => handleSelectR18(i)}
 								>
 									<View style={styles.bar}>
-										<Title style={styles.text}>{v}</Title>
+										<Title style={styles.textArea}>
+											{v}
+										</Title>
 										<RadioButton value={i.toString()} />
 									</View>
 								</TouchableNativeFeedback>
@@ -54,20 +54,3 @@ export default function R18Dialog({visible = false, onClose}: DialogProps) {
 		</Portal>
 	);
 }
-
-const styles = StyleSheet.create({
-	box: {
-		borderRadius: 16,
-		marginVertical: 4,
-		overflow: 'hidden',
-	},
-	bar: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'space-between',
-	},
-	text: {
-		paddingHorizontal: 8,
-		paddingVertical: 4,
-	},
-});

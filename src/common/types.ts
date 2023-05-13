@@ -29,3 +29,8 @@ export type ApiSettings = {
 	excludeAI: boolean; // 排除 AI 作品
 	proxy: string; // 设置图片地址所使用的反代服务
 };
+
+export interface DialogProps {
+	onClose: () => void;
+	visible: boolean;
+}

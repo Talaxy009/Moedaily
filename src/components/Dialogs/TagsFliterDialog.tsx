@@ -9,17 +9,15 @@ import {
 	TextInput,
 } from 'react-native-paper';
 import {useRecoilState} from 'recoil';
-import {ScrollView, StyleSheet, Vibration} from 'react-native';
+import {ScrollView, Vibration} from 'react-native';
 
 import {apiSettingsState} from '../../common/atoms';
 import {useToast} from '../../utils/hooks';
 import {useTags} from '../../utils/tags';
 import strings from './strings';
+import styles from './styles';
 
-interface DialogProps {
-	onClose: () => void;
-	visible: boolean;
-}
+import type {DialogProps} from '../../common/types';
 
 export default function TagsFliterDialog({
 	onClose,
@@ -147,26 +145,3 @@ export default function TagsFliterDialog({
 		</Portal>
 	);
 }
-
-const styles = StyleSheet.create({
-	box: {
-		marginBottom: 16,
-		minHeight: 64,
-		maxHeight: 164,
-	},
-	boxContent: {
-		justifyContent: 'center',
-		flexDirection: 'row',
-		flexWrap: 'wrap',
-	},
-	caption: {
-		alignSelf: 'center',
-	},
-	chip: {
-		margin: 4,
-	},
-	delText: {
-		color: 'red',
-		alignSelf: 'center',
-	},
-});
