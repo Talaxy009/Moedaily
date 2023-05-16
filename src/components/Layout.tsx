@@ -1,28 +1,20 @@
 import React from 'react';
 import {useRecoilState} from 'recoil';
-import LocalizedStrings from 'react-native-localization';
-import {Portal, Snackbar, useTheme} from 'react-native-paper';
-
 import {View, StyleSheet} from 'react-native';
+import {Portal, Snackbar} from 'react-native-paper';
+import LocalizedStrings from 'react-native-localization';
+
 import {toastState} from '../common/atoms';
 
 export default function Layout({children}: {children: React.ReactNode}) {
 	const [toast, setToast] = useRecoilState(toastState);
-	const theme = useTheme();
 
 	const handleClose = () => setToast((p) => ({...p, open: false}));
 
 	return (
 		<>
 			<Portal.Host>
-				<View
-					style={[
-						styles.root,
-						{backgroundColor: theme.colors.background},
-					]}
-				>
-					{children}
-				</View>
+				<View style={styles.root}>{children}</View>
 			</Portal.Host>
 			<Snackbar
 				duration={5000}

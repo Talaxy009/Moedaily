@@ -1,6 +1,6 @@
 import React from 'react';
 import Clipboard from '@react-native-community/clipboard';
-import {Linking, ScrollView} from 'react-native';
+import {Linking, View, ScrollView} from 'react-native';
 import {Button, Dialog, Portal, List, Chip} from 'react-native-paper';
 
 import {ClockIcon, AccIcon, TagIcon} from '../ListIcons';
@@ -93,28 +93,34 @@ export default function ImageInfoDialog({
 						</ScrollView>
 					) : (
 						<>
-							<List.Item
-								left={AccIcon}
-								title={strings.author}
-								description={data?.author}
-								onPress={handleCopyUID}
-							/>
-							<List.Item
-								left={ClockIcon}
-								title={strings.time}
-								description={
-									data?.uploadDate &&
-									new Date(
-										data.uploadDate,
-									).toLocaleDateString()
-								}
-							/>
-							<List.Item
-								left={TagIcon}
-								title={strings.tags}
-								onPress={handleTagsMode}
-								description={data?.tags.toString()}
-							/>
+							<View style={styles.itemBox}>
+								<List.Item
+									left={AccIcon}
+									title={strings.author}
+									description={data?.author}
+									onPress={handleCopyUID}
+								/>
+							</View>
+							<View style={styles.itemBox}>
+								<List.Item
+									left={ClockIcon}
+									title={strings.time}
+									description={
+										data?.uploadDate &&
+										new Date(
+											data.uploadDate,
+										).toLocaleDateString()
+									}
+								/>
+							</View>
+							<View style={styles.itemBox}>
+								<List.Item
+									left={TagIcon}
+									title={strings.tags}
+									onPress={handleTagsMode}
+									description={data?.tags.toString()}
+								/>
+							</View>
 						</>
 					)}
 				</Dialog.Content>

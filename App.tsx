@@ -4,7 +4,6 @@ import {
 	Provider as PaperProvider,
 	MD3DarkTheme,
 	MD3LightTheme,
-	MD3Theme,
 } from 'react-native-paper';
 import {RecoilRoot} from 'recoil';
 import {StatusBar, useColorScheme} from 'react-native';
@@ -47,24 +46,39 @@ const SettingsIcon = (p: any) => {
 
 export default function App(): JSX.Element {
 	const isDarkMode = useColorScheme() === 'dark';
-	const {theme} = useMaterial3Theme({fallbackSourceColor: '#009ba1'});
-	const barStyle = isDarkMode ? 'light-content' : 'dark-content';
+	const {theme: m3Theme} = useMaterial3Theme({
+		fallbackSourceColor: '#009ba1',
+	});
 
-	const paperTheme: MD3Theme = isDarkMode
-		? {...MD3DarkTheme, colors: theme.dark}
-		: {...MD3LightTheme, colors: theme.light};
-	const navTheme = isDarkMode ? NavDarkTheme : NavLightTheme;
+	const darkTheme = {
+		...NavDarkTheme,
+		...MD3DarkTheme,
+		colors: {...NavDarkTheme.colors, ...m3Theme.dark},
+	};
+	const lightTheme = {
+		...NavLightTheme,
+		...MD3LightTheme,
+		colors: {...NavLightTheme.colors, ...m3Theme.light},
+	};
+
+	const theme = isDarkMode ? darkTheme : lightTheme;
+
+	const barStyle = isDarkMode ? 'light-content' : 'dark-content';
 
 	return (
 		<RecoilRoot>
 			<TagsProvider>
-				<NavigationContainer theme={navTheme}>
-					<PaperProvider theme={paperTheme}>
+				<PaperProvider theme={theme}>
+					<NavigationContainer theme={theme}>
 						<StatusBar
 							barStyle={barStyle}
-							backgroundColor={paperTheme.colors.surface}
+							backgroundColor={theme.colors.surface}
 						/>
-						<Tab.Navigator initialRouteName="Index">
+						<Tab.Navigator
+							shifting
+							sceneAnimationEnabled
+							initialRouteName="Index"
+						>
 							<Tab.Screen
 								name="Index"
 								component={IndexPage}
@@ -82,8 +96,8 @@ export default function App(): JSX.Element {
 								}}
 							/>
 						</Tab.Navigator>
-					</PaperProvider>
-				</NavigationContainer>
+					</NavigationContainer>
+				</PaperProvider>
 			</TagsProvider>
 		</RecoilRoot>
 	);
