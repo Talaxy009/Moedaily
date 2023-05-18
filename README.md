@@ -17,5 +17,5 @@
 
 ## ⬇️ 下载
 
-- [GitHub](https://github.com/Talaxy009/Moedaily/releases)（推荐！）
-- [APKPure](https://apkpure.com/p/com.talaxy.moedaily)
+- [GitHub](https://github.com/Talaxy009/Moedaily/releases)
+- [App Center](https://install.appcenter.ms/users/talaxy009/apps/moedaily/distribution_groups/all) (arm64 only)
